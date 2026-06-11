@@ -1,14 +1,15 @@
 #include "common/assert.h"
 #include "renderer.h"
 
-std::string APP_ROOT;
+extern std::string APP_ROOT;
 
 Renderer::Renderer() {
     Init();
 }
 
 Renderer::~Renderer() {
-    FT_Done_Face(font);
+    if (use_font)
+        FT_Done_Face(font);
 }
 
 void Renderer::Init() {
@@ -16,10 +17,10 @@ void Renderer::Init() {
         scene = new Scene2D(1920, 1080, 4);
         ASSERT_MSG(scene->Init(0xC000000, 2), "Failed to initialize 2D scene");
     }
-    if (use_font && scene->ftLib) {
+    if (use_font && !scene->ftLib) {
         ASSERT_OK(scene->InitFontLib());
         std::string font_path = APP_ROOT + "assets/fonts/Monocraft.ttf";
-        if (scene->InitFont(&font, font_path.c_str(), 80) && font != nullptr) {
+        if (scene->InitFont(&font, font_path.c_str(), 30) && font != nullptr) {
             LOG_ERROR("Failed to init font");
             use_font = false;
         }

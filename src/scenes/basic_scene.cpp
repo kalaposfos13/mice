@@ -26,6 +26,5 @@ void BasicScene::Draw(AppContext& ctx) {
     MousePosition const& mps1 = ctx.mice.positions[1];
 
     ctx.renderer.scene->DrawRectangle(mps0.x, mps0.y, 25, 25, {255, 0, 0});
-
     ctx.renderer.scene->DrawRectangle(mps1.x, mps1.y, 25, 25, {0, 255, 0});
 }

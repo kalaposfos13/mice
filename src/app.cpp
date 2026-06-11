@@ -1,10 +1,11 @@
 #include "app.h"
+#include "ui.h"
 
 #include <map>
 #include <utility>
 
 void App::Run() {
-    current_scene = std::make_unique<BasicScene>();
+    current_scene = std::make_unique<MainMenuScene>();
     current_scene->Enter(ctx);
 
     ctx.running = true;
@@ -38,6 +39,7 @@ App::App() {
     LOG_INFO("userid: {:x}", (u32)ctx.user_id);
     ctx.pad.Init(ctx.user_id);
     ctx.mice.Init(ctx.user_id);
+    UI::InitFonts(ctx);
 }
 
 App::~App() {

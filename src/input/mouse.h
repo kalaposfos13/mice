@@ -50,12 +50,23 @@ struct MousePosition {
     s32 x = 0, y = 0;
 };
 
+enum MouseButtons : u32 {
+    None = 0,
+    Left = 1,
+    Right = 2,
+    Middle = 4,
+    Side1 = 8,
+    Side2 = 16,
+};
+
 using FrameStateA = std::array<MouseFrameState, 2>;
 class Mice {
 public:
     s32 m_handles[2]{};
-    FrameStateA delta_frame_state;
-    FrameStateA stable_frame_state;
+    FrameStateA delta_frame_state{};
+    FrameStateA stable_frame_state{};
+    u32 pressed_btns[2]{};
+    u32 unpressed_btns[2]{};
     MousePosition positions[2]{};
     OrbisMouseData m_data_bufs[2][64]{};
     std::mutex mm{};

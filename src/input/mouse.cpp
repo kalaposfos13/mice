@@ -50,6 +50,10 @@ void Mice::UpdateState() {
     positions[0].y += stable_frame_state[0].dy;
     positions[1].x += stable_frame_state[1].dx;
     positions[1].y += stable_frame_state[1].dy;
+    pressed_btns[0] = ~pressed_btns[0] & stable_frame_state[0].buttons;
+    unpressed_btns[0] = unpressed_btns[0] & ~stable_frame_state[0].buttons;
+    pressed_btns[1] = ~pressed_btns[1] & stable_frame_state[1].buttons;
+    unpressed_btns[1] = unpressed_btns[1] & ~stable_frame_state[1].buttons;
     return;
 }
 
