@@ -3,12 +3,12 @@ TITLE       := Mechanical Interface for Cargo Equipment
 VERSION     := 0.01
 TITLE_ID    := MICE00001
 CONTENT_ID  := IV0000-$(TITLE_ID)_00-HOMEBREW00000000
-SDK_VERSION := 0x1000051
+SDK_VERSION := 0x02000001
 
 # Libraries linked into the ELF.
-LIBS        := -lc -lkernel -lc++ -lSceSysUtil -lSceSystemService -lSceUserService -lSceCamera -lScePad \
-				-lSceVideoOut -lSceGnmDriver -lScePadTracker -lSceSysmodule -lSceMove -lSceMoveTracker -lSceFreeType \
-				-lSceHmd
+LIBS        := -lc -lkernel -lc++ -lSceSysUtil -lSceSystemService -lSceUserService -lScePad \
+				-lSceVideoOut -lSceGnmDriver -lSceSysmodule -lSceFreeType \
+				-lSceMouse
 
 # Additional compile flags.
 #EXTRAFLAGS  := 

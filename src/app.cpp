@@ -5,13 +5,17 @@
 
 void App::Run() {
     while (HandleControllerInput()) {
+        mice.UpdateState();
         renderer.BeginFrame();
+        MousePosition const& mps0 = mice.positions[0];
+        MousePosition const& mps1 = mice.positions[1];
+        renderer.scene->DrawRectangle(mps0.x, mps0.y, 25, 25, {255, 0, 0});
+        renderer.scene->DrawRectangle(mps1.x, mps1.y, 25, 25, {0, 255, 0});
         renderer.EndFrame();
     }
 }
 
 App::App() {
-    sceSysmoduleLoadModule(ORBIS_SYSMODULE_LIBIME);
     OrbisUserServiceInitializeParams param;
     param.priority = ORBIS_KERNEL_PRIO_FIFO_LOWEST;
     sceUserServiceInitialize(&param);
@@ -19,6 +23,7 @@ App::App() {
     scePadInit();
     ASSERT_NO_ERROR(pad_handle = scePadOpen(user_id, 0, 0, 0));
     LOG_INFO("userid: {}, pad handle: {:x}", user_id, pad_handle);
+    mice.Init(user_id);
 }
 
 App::~App() {

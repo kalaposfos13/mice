@@ -13,6 +13,7 @@
 
 #include <cstdlib>
 #include "renderer.h"
+#include "mouse.h"
 
 struct AppState {
     s32 eye = 0;
@@ -36,6 +37,7 @@ public:
 
     OrbisPadData pdata{};
 
+    Mice mice{};
     Renderer renderer{};
     AppState state{};
 };
