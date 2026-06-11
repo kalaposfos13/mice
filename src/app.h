@@ -16,7 +16,6 @@
 #include "mouse.h"
 
 struct AppState {
-    s32 eye = 0;
 };
 
 class App {
