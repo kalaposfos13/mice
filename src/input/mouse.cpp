@@ -15,7 +15,7 @@ void Mice::Init(OrbisUserServiceUserId const& uid) {
             {
                 std::scoped_lock l{mm};
                 for (int m = 0; m < 2; m++) {
-                    s32 ret = sceMouseRead(m_handles[m], m_data_bufs[m], 64);
+                    s32 ret = sceMouseRead(m_handles[m], m_data_bufs[m].data(), 64);
                     if (ret == ORBIS_MOUSE_ERROR_INVALID_HANDLE) {
                         return;
                     }
@@ -32,6 +32,7 @@ void Mice::Init(OrbisUserServiceUserId const& uid) {
                             acc.tilt += d.tilt;
 
                             acc.buttons |= d.buttons;
+                            acc.timestamp = d.timestamp;
                         }
                     }
                 }
@@ -44,17 +45,24 @@ void Mice::Init(OrbisUserServiceUserId const& uid) {
 
 void Mice::UpdateState() {
     std::scoped_lock l{mm};
-    stable_frame_state = delta_frame_state;
-    delta_frame_state = {};
-    positions[0].x += stable_frame_state[0].dx;
-    positions[0].y += stable_frame_state[0].dy;
-    positions[1].x += stable_frame_state[1].dx;
-    positions[1].y += stable_frame_state[1].dy;
-    pressed_btns[0] = ~pressed_btns[0] & stable_frame_state[0].buttons;
-    unpressed_btns[0] = unpressed_btns[0] & ~stable_frame_state[0].buttons;
-    pressed_btns[1] = ~pressed_btns[1] & stable_frame_state[1].buttons;
-    unpressed_btns[1] = unpressed_btns[1] & ~stable_frame_state[1].buttons;
-    return;
+    for (int m = 0; m < 2; m++) {
+        if (delta_frame_state[m].timestamp == 0) {
+            clicked_btns[m] = {};
+            unpressed_btns[m] = {};
+            continue; // no update came
+        }
+        stable_frame_state[m] = delta_frame_state[m];
+        delta_frame_state[m] = {};
+        positions[m].x += stable_frame_state[m].dx;
+        positions[m].y += stable_frame_state[m].dy;
+        positions[m].x += stable_frame_state[m].dx;
+        positions[m].y += stable_frame_state[m].dy;
+        auto old = current_btns[m];
+        auto now = stable_frame_state[m].buttons;
+        current_btns[m] = now;
+        clicked_btns[m] = now & ~old;
+        unpressed_btns[m] = old & ~now;
+    }
 }
 
 Mice::~Mice() {

@@ -44,6 +44,7 @@ struct MouseFrameState {
     s32 wheel = 0;
     s32 tilt = 0;
     u32 buttons = 0;
+    u64 timestamp = 0;
 };
 
 struct MousePosition {
@@ -65,10 +66,11 @@ public:
     s32 m_handles[2]{};
     FrameStateA delta_frame_state{};
     FrameStateA stable_frame_state{};
-    u32 pressed_btns[2]{};
+    u32 current_btns[2]{};
+    u32 clicked_btns[2]{};
     u32 unpressed_btns[2]{};
     MousePosition positions[2]{};
-    OrbisMouseData m_data_bufs[2][64]{};
+    std::array<std::array<OrbisMouseData, 64>, 2> m_data_bufs{};
     std::mutex mm{};
     Mice() {}
     ~Mice();
