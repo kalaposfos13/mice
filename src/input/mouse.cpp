@@ -1,6 +1,6 @@
 #include <thread>
 #include <orbis/Sysmodule.h>
-#include "assert.h"
+#include "common/assert.h"
 #include "mouse.h"
 
 void Mice::Init(OrbisUserServiceUserId const& uid) {

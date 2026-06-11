@@ -1,7 +1,7 @@
-#include "assert.h"
+#include "common/assert.h"
+#include "common/types.h"
 #include "image.h"
 #include "orbis/libkernel.h"
-#include "types.h"
 
 enum MemoryProt : u32 {
     NoAccess = 0,

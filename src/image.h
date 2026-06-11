@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <types.h>
+#include "common/types.h"
 
 class Image {
 public:
