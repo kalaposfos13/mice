@@ -1,6 +1,8 @@
 #include "common/assert.h"
 #include "renderer.h"
 
+std::string APP_ROOT;
+
 Renderer::Renderer() {
     Init();
 }
@@ -16,8 +18,7 @@ void Renderer::Init() {
     }
     if (use_font && scene->ftLib) {
         ASSERT_OK(scene->InitFontLib());
-        std::string font_path =
-            fmt::format("/{}/common/font/DFHEI5-SONY.ttf", sceKernelGetFsSandboxRandomWord());
+        std::string font_path = APP_ROOT + "assets/fonts/Monocraft.ttf";
         if (scene->InitFont(&font, font_path.c_str(), 80) && font != nullptr) {
             LOG_ERROR("Failed to init font");
             use_font = false;

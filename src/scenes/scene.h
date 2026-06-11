@@ -13,10 +13,15 @@ public:
     virtual void Draw(AppContext& ctx) = 0;
 };
 
-class BasicScene : public Scene {
-public:
-    void Enter(AppContext& ctx) override;
-    void Leave(AppContext& ctx) override;
-    void Update(AppContext& ctx, float dt) override;
-    void Draw(AppContext& ctx) override;
-};
+#define DECLARE_SCENE(name)                                                                        \
+    class name : public Scene {                                                                    \
+    public:                                                                                        \
+        void Enter(AppContext& ctx) override;                                                      \
+        void Leave(AppContext& ctx) override;                                                      \
+        void Update(AppContext& ctx, float dt) override;                                           \
+        void Draw(AppContext& ctx) override;                                                       \
+    };
+
+DECLARE_SCENE(EmptyScene)
+DECLARE_SCENE(BasicScene)
+DECLARE_SCENE(MainMenuScene)

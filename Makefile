@@ -21,7 +21,7 @@ LIBMODULES  := $(wildcard sce_module/*.prx)
 TOOLCHAIN   := $(OO_PS4_TOOLCHAIN)
 PROJDIR     := src
 COMMONDIR   := $(TOOLCHAIN)/samples/_common
-INTDIR      := $(PROJDIR)/x64/Debug
+INTDIR      := build
 
 # Define objects to build
 CFILES      := $(shell find src -name "*.c")

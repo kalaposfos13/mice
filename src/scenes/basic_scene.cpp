@@ -1,5 +1,5 @@
-#include <app_context.h>
 #include "scene.h"
+#include "app_context.h"
 #include "common/logging.h"
 
 void BasicScene::Enter(AppContext& ctx) {

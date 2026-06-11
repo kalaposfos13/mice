@@ -7,6 +7,8 @@
 
 #include <memory>
 
+extern std::string APP_ROOT;
+
 struct Settings {};
 
 class AppContext {

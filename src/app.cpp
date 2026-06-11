@@ -8,17 +8,16 @@ void App::Run() {
     current_scene->Enter(ctx);
 
     ctx.running = true;
-
-    auto dt_next = std::chrono::steady_clock::now();
-    auto dt_prev = dt_next;
+    auto dt_prev = std::chrono::steady_clock::now();
 
     while (ctx.running) {
         ctx.pad.Update();
         ctx.mice.UpdateState();
 
-        current_scene->Update(ctx, ((dt_next - dt_prev).count() / 1'000'000.0));
-        dt_prev = dt_next;
-        dt_next = std::chrono::steady_clock::now();
+        auto now = std::chrono::steady_clock::now();
+        double dt = std::chrono::duration<double>(now - dt_prev).count();
+        dt_prev = now;
+        current_scene->Update(ctx, dt);
 
         ctx.renderer.BeginFrame();
         current_scene->Draw(ctx);
