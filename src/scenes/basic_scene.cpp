@@ -1,9 +1,23 @@
 #include <app_context.h>
 #include "scene.h"
+#include "common/logging.h"
+
+void BasicScene::Enter(AppContext& ctx) {
+    LOG_INFO("Entered basic scene");
+    ctx.mice.SetCursor(0, 1920 / 2, 1080 / 2);
+    ctx.mice.SetCursor(1, 1920 / 2, 1080 / 2);
+}
+
+void BasicScene::Leave(AppContext& ctx) {
+    LOG_INFO("Exited basic scene");
+}
 
 void BasicScene::Update(AppContext& ctx, float dt) {
     if (ctx.pad.IsPressed(OrbisPadButton::ORBIS_PAD_BUTTON_CIRCLE)) {
         ctx.running = false;
+    }
+    if (ctx.pad.IsPressed(OrbisPadButton::ORBIS_PAD_BUTTON_TRIANGLE)) {
+        ctx.next_scene = std::make_unique<BasicScene>();
     }
 }
 

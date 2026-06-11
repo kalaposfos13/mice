@@ -1,6 +1,6 @@
 #pragma once
 
-#include "app_context.h"
+class AppContext;
 
 class Scene {
 public:
@@ -15,6 +15,8 @@ public:
 
 class BasicScene : public Scene {
 public:
+    void Enter(AppContext& ctx) override;
+    void Leave(AppContext& ctx) override;
     void Update(AppContext& ctx, float dt) override;
     void Draw(AppContext& ctx) override;
 };

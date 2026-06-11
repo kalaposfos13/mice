@@ -58,3 +58,8 @@ Mice::~Mice() {
     sceMouseClose(m_handles[1]);
     sceSysmoduleUnloadModule(ORBIS_SYSMODULE_MOUSE);
 }
+
+void Mice::SetCursor(s32 which, s32 x, s32 y) {
+    positions[which].x = x;
+    positions[which].y = y;
+}

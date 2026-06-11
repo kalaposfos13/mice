@@ -47,7 +47,7 @@ struct MouseFrameState {
 };
 
 struct MousePosition {
-    s32 x = 1920 / 2, y = 1080 / 2;
+    s32 x = 0, y = 0;
 };
 
 using FrameStateA = std::array<MouseFrameState, 2>;
@@ -63,4 +63,5 @@ public:
     ~Mice();
     void Init(OrbisUserServiceUserId const& uid);
     void UpdateState();
+    void SetCursor(s32 which, s32 x, s32 y);
 };

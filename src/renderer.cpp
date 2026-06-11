@@ -1,4 +1,4 @@
-#include "assert.h"
+#include "common/assert.h"
 #include "renderer.h"
 
 Renderer::Renderer() {

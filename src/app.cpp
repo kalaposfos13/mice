@@ -16,7 +16,6 @@ void App::Run() {
         ctx.pad.Update();
         ctx.mice.UpdateState();
 
-
         current_scene->Update(ctx, ((dt_next - dt_prev).count() / 1'000'000.0));
         dt_prev = dt_next;
         dt_next = std::chrono::steady_clock::now();
@@ -24,6 +23,11 @@ void App::Run() {
         ctx.renderer.BeginFrame();
         current_scene->Draw(ctx);
         ctx.renderer.EndFrame();
+        if (ctx.next_scene) {
+            current_scene->Leave(ctx);
+            current_scene = std::move(ctx.next_scene);
+            current_scene->Enter(ctx);
+        }
     }
 }
 
