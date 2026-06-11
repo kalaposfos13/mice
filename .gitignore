@@ -1,0 +1,16 @@
+x64/
+eboot.bin
+*.zip
+*.pkg
+param.sfo
+*.gp4
+.vscode
+output.txt
+*.mp4
+*.sprx
+!right.sprx
+oneshots
+pkgs
+videos
+build
+frame_dump*
