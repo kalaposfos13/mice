@@ -33,7 +33,7 @@ CXXFLAGS    := -isystem $(TOOLCHAIN)/include/c++/v1 -fexceptions -fcxx-exception
 LDFLAGS     := -m elf_x86_64 -pie --script $(TOOLCHAIN)/link.x --eh-frame-hdr -L$(TOOLCHAIN)/lib $(LIBS) $(TOOLCHAIN)/lib/crt1.o
 
 # Create the intermediate directory incase it doesn't already exist.
-_unused     := $(shell mkdir -p $(INTDIR) pkgs)
+_unused     := $(shell mkdir -p $(INTDIR))
 
 # Check for linux vs macOS and account for clang/ld path
 UNAME_S     := $(shell uname -s)
@@ -51,10 +51,10 @@ ifeq ($(UNAME_S),Darwin)
 		CDIR    := macos
 endif
 
-all: pkgs/$(CONTENT_ID).pkg
+all: $(INTDIR)/$(CONTENT_ID).pkg
 
-pkgs/$(CONTENT_ID).pkg: pkg.gp4
-	$(TOOLCHAIN)/bin/$(CDIR)/PkgTool.Core pkg_build $< ./pkgs
+$(INTDIR)/$(CONTENT_ID).pkg: pkg.gp4
+	$(TOOLCHAIN)/bin/$(CDIR)/PkgTool.Core pkg_build $< $(INTDIR)
 
 sce_sys/param.sfo: Makefile
 	$(TOOLCHAIN)/bin/$(CDIR)/PkgTool.Core sfo_new $@
@@ -85,6 +85,4 @@ $(INTDIR)/%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(CONTENT_ID).pkg pkg.gp4 pkg/sce_sys/param.sfo eboot.bin \
-		$(INTDIR)/$(PROJDIR).elf $(INTDIR)/$(PROJDIR).oelf $(OBJS)
-	rm -rf $(INTDIR)
+	rm -rf $(INTDIR) eboot.bin pkg.gp4 sce_sys/param.sfo
