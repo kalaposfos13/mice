@@ -25,5 +25,4 @@ public:
     bool use_font = false;
 
     AppContext ctx{};
-    std::unique_ptr<Scene> current_scene;
 };

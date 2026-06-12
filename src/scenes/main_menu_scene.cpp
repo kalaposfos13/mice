@@ -5,6 +5,7 @@
 #define THIS_SCENE MainMenuScene
 
 void THIS_SCENE::Enter(AppContext& ctx) {
+    LOG_INFO("enter");
     ctx.mice.SetCursor(0, 1920 / 2, 1080 / 2);
     ctx.mice.SetCursor(1, 1920 / 2, 1080 / 2);
 }

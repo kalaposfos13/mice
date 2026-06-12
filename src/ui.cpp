@@ -23,12 +23,12 @@ bool UI::Button(Rect const& rect, std::string_view const text, FontSize const si
                 ButtonReport report) {
     bool m0_inside = rect.Contains(ctx.mice.positions[0]);
     bool m1_inside = rect.Contains(ctx.mice.positions[1]);
-    bool m0_clicked = ctx.mice.clicked_btns[0] & MouseButtons::Right;
-    bool m1_clicked = ctx.mice.clicked_btns[1] & MouseButtons::Left;
-    bool m0_pressed = ctx.mice.current_btns[0] & MouseButtons::Right;
-    bool m1_pressed = ctx.mice.current_btns[1] & MouseButtons::Left;
-    bool m0_released = ctx.mice.unpressed_btns[0] & MouseButtons::Right;
-    bool m1_released = ctx.mice.unpressed_btns[1] & MouseButtons::Left;
+    bool m0_clicked = ctx.mice.clicked_btns[0]    & MouseButtons::Right && ctx.accepting_inputs;
+    bool m1_clicked = ctx.mice.clicked_btns[1]    &  MouseButtons::Left && ctx.accepting_inputs;
+    bool m0_pressed = ctx.mice.current_btns[0]    & MouseButtons::Right && ctx.accepting_inputs;
+    bool m1_pressed = ctx.mice.current_btns[1]    &  MouseButtons::Left && ctx.accepting_inputs;
+    bool m0_released = ctx.mice.unpressed_btns[0] & MouseButtons::Right && ctx.accepting_inputs;
+    bool m1_released = ctx.mice.unpressed_btns[1] &  MouseButtons::Left && ctx.accepting_inputs;
 
     Color outline_c = Colors::darker_silver;
     if (m0_inside && m1_inside) {

@@ -17,7 +17,7 @@ void BasicScene::Update(AppContext& ctx, float dt) {
         ctx.running = false;
     }
     if (ctx.pad.IsPressed(OrbisPadButton::ORBIS_PAD_BUTTON_TRIANGLE)) {
-        ctx.next_scene = std::make_unique<BasicScene>();
+        ctx.scenes.Push<BasicScene>();
     }
 }
 

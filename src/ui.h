@@ -46,13 +46,17 @@ enum class ButtonReport {
 
 class UI {
     static s32 GetFontActualSize(FontSize const s);
+
 public:
     explicit UI(AppContext& _ctx);
     static void InitFonts(AppContext& ctx);
 
-    bool Button(Rect const& rect, std::string_view const text, FontSize const size, ButtonReport report);
+    bool Button(Rect const& rect, std::string_view const text,
+                FontSize const size = FontSize::Medium,
+                ButtonReport report = ButtonReport::Released);
 
-    void Label(Rect const& rect, std::string_view const text, FontSize const size);
+    void Label(Rect const& rect, std::string_view const text,
+               FontSize const size = FontSize::Medium);
 
     static void DrawCursors(AppContext& ctx);
 

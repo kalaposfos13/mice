@@ -1,9 +1,11 @@
 #pragma once
 
+#include "common/logging.h"
+#include "common/assert.h"
 #include "input/mouse.h"
 #include "input/pad.h"
 #include "renderer.h"
-#include "scenes/scene.h"
+#include "scenes/scene_manager.h"
 
 #include <memory>
 
@@ -14,8 +16,10 @@ struct Settings {};
 class AppContext {
 public:
     s32 user_id{};
-    bool running;
-    std::unique_ptr<Scene> next_scene;
+    bool running = false;
+    bool draw_mice = true;
+    bool accepting_inputs = true;
+    SceneManager scenes{*this};
 
     Renderer renderer{};
 
