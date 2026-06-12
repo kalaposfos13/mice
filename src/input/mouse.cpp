@@ -17,6 +17,7 @@ void Mice::Init(OrbisUserServiceUserId const& uid) {
                 for (int m = 0; m < 2; m++) {
                     s32 ret = sceMouseRead(m_handles[m], m_data_bufs[m].data(), 64);
                     if (ret == ORBIS_MOUSE_ERROR_INVALID_HANDLE) {
+                        LOG_INFO("Exiting mouse read thread");
                         return;
                     }
                     ASSERT_NO_ERROR(ret);

@@ -20,7 +20,7 @@ void Renderer::Init() {
     if (use_font && !scene->ftLib) {
         ASSERT_OK(scene->InitFontLib());
         std::string font_path = APP_ROOT + "assets/fonts/Monocraft.ttf";
-        if (scene->InitFont(&font, font_path.c_str(), 30) && font != nullptr) {
+        if (!scene->InitFont(&font, font_path.c_str(), 30) || font == nullptr) {
             LOG_ERROR("Failed to init font");
             use_font = false;
         }

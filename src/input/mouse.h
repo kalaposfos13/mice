@@ -34,8 +34,8 @@ struct OrbisMouseOpenParam {
 
 s32 sceMouseInit();
 s32 sceMouseOpen(OrbisUserServiceUserId userId, s32 type, s32 index, OrbisMouseOpenParam* pParam);
-int sceMouseClose(s32 handle);
-int sceMouseRead(s32 handle, OrbisMouseData* pData, s32 num);
+s32 sceMouseClose(s32 handle);
+s32 sceMouseRead(s32 handle, OrbisMouseData* pData, s32 num);
 }
 
 struct MouseFrameState {
