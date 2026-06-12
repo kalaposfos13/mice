@@ -7,24 +7,28 @@ FT_Face UI::fonts[3]{};
 void UI::InitFonts(AppContext& ctx) {
     std::string font_path = APP_ROOT + "assets/fonts/Monocraft.ttf";
     for (int i = 0; i < 3; i++) {
-        if (ctx.renderer.scene->InitFont(&fonts[i], font_path.c_str(), GetFontActualSize((FontSize)i)) &&
+        if (ctx.renderer.scene->InitFont(&fonts[i], font_path.c_str(),
+                                         GetFontActualSize((FontSize)i)) &&
             fonts[i] == nullptr) {
             LOG_ERROR("Failed to init font");
         }
     }
 }
 
-s32 UI::GetFontActualSize(FontSize const s){
+s32 UI::GetFontActualSize(FontSize const s) {
     return 20 + (u32)s * 15;
 }
 
-bool UI::Button(Rect const& rect, std::string_view const text, FontSize const size) {
+bool UI::Button(Rect const& rect, std::string_view const text, FontSize const size,
+                ButtonReport report) {
     bool m0_inside = rect.Contains(ctx.mice.positions[0]);
     bool m1_inside = rect.Contains(ctx.mice.positions[1]);
     bool m0_clicked = ctx.mice.clicked_btns[0] & MouseButtons::Right;
     bool m1_clicked = ctx.mice.clicked_btns[1] & MouseButtons::Left;
     bool m0_pressed = ctx.mice.current_btns[0] & MouseButtons::Right;
     bool m1_pressed = ctx.mice.current_btns[1] & MouseButtons::Left;
+    bool m0_released = ctx.mice.unpressed_btns[0] & MouseButtons::Right;
+    bool m1_released = ctx.mice.unpressed_btns[1] & MouseButtons::Left;
 
     Color outline_c = Colors::darker_silver;
     if (m0_inside && m1_inside) {
@@ -44,12 +48,26 @@ bool UI::Button(Rect const& rect, std::string_view const text, FontSize const si
                                  rect.y + 15 + GetFontActualSize(size), Colors::silver,
                                  Colors::black);
 
-    return (m0_inside && m0_clicked) || (m1_inside && m1_clicked);
+    switch (report) {
+    case ButtonReport::Never:
+        return false;
+    case ButtonReport::Hovered:
+        return (m0_inside) || (m1_inside);
+    case ButtonReport::Held:
+        return (m0_inside && m0_pressed) || (m1_inside && m1_pressed);
+    case ButtonReport::Clicked:
+        return (m0_inside && m0_clicked) || (m1_inside && m1_clicked);
+    case ButtonReport::Released:
+        return (m0_inside && m0_released) || (m1_inside && m1_released);
+    default:
+        return false;
+    }
 }
 
 void UI::Label(Rect const& rect, std::string_view const text, FontSize const size) {
-    ctx.renderer.scene->DrawText(text.data(), fonts[(u32)size], rect.x + 7, rect.y + 7,
-                                 Colors::background, Colors::black);
+    ctx.renderer.scene->DrawText(text.data(), fonts[(u32)size], rect.x + 7,
+                                 rect.y + 7 + GetFontActualSize(size), Colors::background,
+                                 Colors::black);
 }
 
 void UI::DrawCursors(AppContext& ctx) {

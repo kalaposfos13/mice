@@ -36,13 +36,21 @@ enum class FontSize {
     Large,
 };
 
+enum class ButtonReport {
+    Never = 0,
+    Hovered,
+    Held,
+    Clicked,
+    Released,
+};
+
 class UI {
     static s32 GetFontActualSize(FontSize const s);
 public:
     explicit UI(AppContext& _ctx);
     static void InitFonts(AppContext& ctx);
 
-    bool Button(Rect const& rect, std::string_view const text, FontSize const size);
+    bool Button(Rect const& rect, std::string_view const text, FontSize const size, ButtonReport report);
 
     void Label(Rect const& rect, std::string_view const text, FontSize const size);
 
