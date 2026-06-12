@@ -1,5 +1,5 @@
 # Package metadata.
-TITLE       := Mechanical Interface for Cargo Equipment
+TITLE       := M.I.C.E.
 VERSION     := 0.01
 TITLE_ID    := MICE00001
 CONTENT_ID  := IV0000-$(TITLE_ID)_00-HOMEBREW00000000
