@@ -7,11 +7,15 @@ FT_Face UI::fonts[3]{};
 void UI::InitFonts(AppContext& ctx) {
     std::string font_path = APP_ROOT + "assets/fonts/Monocraft.ttf";
     for (int i = 0; i < 3; i++) {
-        if (ctx.renderer.scene->InitFont(&fonts[i], font_path.c_str(), 20 + i * 10) &&
-            fonts[i] != nullptr) {
+        if (ctx.renderer.scene->InitFont(&fonts[i], font_path.c_str(), GetFontActualSize((FontSize)i)) &&
+            fonts[i] == nullptr) {
             LOG_ERROR("Failed to init font");
         }
     }
+}
+
+s32 UI::GetFontActualSize(FontSize const s){
+    return 20 + (u32)s * 15;
 }
 
 bool UI::Button(Rect const& rect, std::string_view const text, FontSize const size) {
@@ -37,7 +41,7 @@ bool UI::Button(Rect const& rect, std::string_view const text, FontSize const si
     ctx.renderer.scene->DrawRectangleWithBorder(rect.x, rect.y, rect.w, rect.h, Colors::silver, 10,
                                                 outline_c);
     ctx.renderer.scene->DrawText(text.data(), fonts[(u32)size], rect.x + 15,
-                                 rect.y + 15 + (20 + (u32)size * 10), Colors::silver,
+                                 rect.y + 15 + GetFontActualSize(size), Colors::silver,
                                  Colors::black);
 
     return (m0_inside && m0_clicked) || (m1_inside && m1_clicked);

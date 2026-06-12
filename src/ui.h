@@ -37,6 +37,7 @@ enum class FontSize {
 };
 
 class UI {
+    static s32 GetFontActualSize(FontSize const s);
 public:
     explicit UI(AppContext& _ctx);
     static void InitFonts(AppContext& ctx);

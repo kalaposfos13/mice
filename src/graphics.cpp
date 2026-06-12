@@ -7,6 +7,7 @@
 
 #include "common/logging.h"
 #include "graphics.h"
+#include "common/types.h"
 
 Scene2D::Scene2D(int w, int h, int pixelDepth)
     : width(w), height(h), depth(pixelDepth),
@@ -63,7 +64,7 @@ int Scene2D::InitFontLib() {
     rc = FT_Init_FreeType(&this->ftLib);
 
     if (rc != 0) {
-        LOG_DEBUG("Failed to initialize freetype: {}", std::string(strerror(errno)));
+        LOG_DEBUG("Failed to initialize freetype: {}", rc);
         return ORBIS_FAIL;
     }
     return ORBIS_OK;
