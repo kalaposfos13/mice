@@ -1,6 +1,6 @@
 #pragma once
 
-#include "image.h"
+#include "display/image.h"
 
 class AppContext;
 

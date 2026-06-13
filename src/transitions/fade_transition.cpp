@@ -3,7 +3,6 @@
 #include <algorithm>
 
 #include "app_context.h"
-#include "renderer.h"
 
 float FadeTransition::Duration() const {
     return 0.25f;
