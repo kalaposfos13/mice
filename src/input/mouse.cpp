@@ -7,25 +7,25 @@ void Mice::Init(OrbisUserServiceUserId const& uid) {
     sceSysmoduleLoadModule(ORBIS_SYSMODULE_MOUSE);
     sceMouseInit();
     OrbisMouseOpenParam p{.flag = MouseOpenBehaviour::Normal};
-    m_handles[0] = sceMouseOpen(uid, 0, 0, &p);
-    m_handles[1] = sceMouseOpen(uid, 0, 1, &p);
-    LOG_INFO("m0 handle: {}, m1 handle: {}", m_handles[0], m_handles[1]);
+    mice[0].handle = sceMouseOpen(uid, 0, 0, &p);
+    mice[1].handle = sceMouseOpen(uid, 0, 1, &p);
+    LOG_INFO("m0 handle: {}, m1 handle: {}", mice[0].handle, mice[1].handle);
     std::thread reader{[this]() {
         while (true) {
             {
                 std::scoped_lock l{mm};
-                for (int m = 0; m < 2; m++) {
-                    s32 ret = sceMouseRead(m_handles[m], m_data_bufs[m].data(), 64);
+                for (Mouse& mouse : mice) {
+                    s32 ret = sceMouseRead(mouse.handle, mouse.data_buf.data(), 64);
                     if (ret == ORBIS_MOUSE_ERROR_INVALID_HANDLE) {
                         LOG_INFO("Exiting mouse read thread");
                         return;
                     }
                     ASSERT_NO_ERROR(ret);
                     {
-                        MouseFrameState& acc = delta_frame_state[m];
+                        MouseFrameState& acc = mouse.delta;
 
                         for (int i = 0; i < ret; i++) {
-                            const auto& d = m_data_bufs[m][i];
+                            const auto& d = mouse.data_buf[i];
 
                             acc.dx += d.x_axis;
                             acc.dy += d.y_axis;
@@ -46,38 +46,40 @@ void Mice::Init(OrbisUserServiceUserId const& uid) {
 
 void Mice::Update() {
     std::scoped_lock l{mm};
-    for (int m = 0; m < 2; m++) {
-        if (delta_frame_state[m].timestamp == 0) {
-            clicked_btns[m] = {};
-            unpressed_btns[m] = {};
+    for (Mouse& mouse : mice) {
+        if (mouse.delta.timestamp == 0) {
+            mouse.clicked_buttons = {};
+            mouse.released_buttons = {};
             continue; // no update came
         }
-        stable_frame_state[m] = delta_frame_state[m];
-        delta_frame_state[m] = {};
-        positions[m].x += stable_frame_state[m].dx;
-        positions[m].y += stable_frame_state[m].dy;
-        positions[m].x += stable_frame_state[m].dx;
-        positions[m].y += stable_frame_state[m].dy;
-        auto old = current_btns[m];
-        auto now = stable_frame_state[m].buttons;
-        current_btns[m] = now;
-        clicked_btns[m] = now & ~old;
-        unpressed_btns[m] = old & ~now;
+        mouse.stable = mouse.delta;
+        mouse.delta = {};
+        mouse.position.x += mouse.stable.dx;
+        mouse.position.y += mouse.stable.dy;
+        mouse.position.x += mouse.stable.dx;
+        mouse.position.y += mouse.stable.dy;
+        auto old = mouse.current_buttons;
+        auto now = mouse.stable.buttons;
+        mouse.current_buttons = now;
+        mouse.clicked_buttons = now & ~old;
+        mouse.released_buttons = old & ~now;
     }
 }
 
 Mice::~Mice() {
-    sceMouseClose(m_handles[0]);
-    sceMouseClose(m_handles[1]);
+    for (Mouse& mouse : mice) {
+        sceMouseClose(mouse.handle);
+    }
+
     sceSysmoduleUnloadModule(ORBIS_SYSMODULE_MOUSE);
 }
 
 void Mice::SetCursor(s32 which, s32 x, s32 y) {
-    positions[which].x = x;
-    positions[which].y = y;
+    mice[which].position.x = x;
+    mice[which].position.y = y;
 }
 
 void Mice::Recenter(s32 which) {
-    positions[which].x = 1920 / 2;
-    positions[which].y = 1080 / 2;
+    mice[which].position.x = 1920 / 2;
+    mice[which].position.y = 1080 / 2;
 }

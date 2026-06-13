@@ -16,10 +16,10 @@ void THIS_SCENE::Update(AppContext& ctx, double dt) {
     if (ctx.pad.IsPressed(OrbisPadButton::ORBIS_PAD_BUTTON_CIRCLE)) {
         ctx.running = false;
     }
-    if ((ctx.mice.clicked_btns[0] & MouseButtons::Middle) != 0) {
+    if ((ctx.mice[0].clicked_buttons & MouseButtons::Middle) != 0) {
         ctx.mice.SetCursor(0, 1920 / 2, 1080 / 2);
     }
-    if ((ctx.mice.clicked_btns[1] & MouseButtons::Middle) != 0) {
+    if ((ctx.mice[1].clicked_buttons & MouseButtons::Middle) != 0) {
         ctx.mice.SetCursor(1, 1920 / 2, 1080 / 2);
     }
 }

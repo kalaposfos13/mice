@@ -60,17 +60,25 @@ enum MouseButtons : u32 {
     Side2 = 16,
 };
 
-using FrameStateA = std::array<MouseFrameState, 2>;
+struct Mouse {
+    s32 handle{};
+
+    MouseFrameState delta{};
+    MouseFrameState stable{};
+
+    u32 current_buttons{};
+    u32 clicked_buttons{};
+    u32 released_buttons{};
+
+    MousePosition position{};
+
+    std::array<OrbisMouseData, 64> data_buf{};
+};
+
+using MouseArray = std::array<Mouse, 2>;
 class Mice {
 public:
-    s32 m_handles[2]{};
-    FrameStateA delta_frame_state{};
-    FrameStateA stable_frame_state{};
-    u32 current_btns[2]{};
-    u32 clicked_btns[2]{};
-    u32 unpressed_btns[2]{};
-    MousePosition positions[2]{};
-    std::array<std::array<OrbisMouseData, 64>, 2> m_data_bufs{};
+    MouseArray mice;
     std::mutex mm{};
     Mice() {}
     ~Mice();
@@ -78,4 +86,7 @@ public:
     void Update();
     void SetCursor(s32 which, s32 x, s32 y);
     void Recenter(s32 which);
+    Mouse& operator[](u64 index) {
+        return mice[index];
+    }
 };

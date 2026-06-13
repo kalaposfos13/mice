@@ -26,8 +26,8 @@ void BasicScene::Update(AppContext& ctx, double dt) {
 }
 
 void BasicScene::Draw(AppContext& ctx) {
-    MousePosition const& mps0 = ctx.mice.positions[0];
-    MousePosition const& mps1 = ctx.mice.positions[1];
+    MousePosition const& mps0 = ctx.mice[0].position;
+    MousePosition const& mps1 = ctx.mice[1].position;
 
     UI ui{ctx};
     ui.Label({100, 300}, fmt::format("seconds: {}", std::floor(elapsed_time)));
