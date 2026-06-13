@@ -23,12 +23,18 @@ bool UI::Button(Rect const& rect, std::string_view const text, FontSize const si
                 ButtonReport report) {
     bool m0_inside = rect.Contains(ctx.mice[0].position);
     bool m1_inside = rect.Contains(ctx.mice[1].position);
-    bool m0_clicked =  ctx.mice[0].clicked_buttons   & MouseButtons::Right && ctx.accepting_inputs;
-    bool m1_clicked =  ctx.mice[1].clicked_buttons   & MouseButtons::Left && ctx.accepting_inputs;
-    bool m0_pressed =  ctx.mice[0].current_buttons   & MouseButtons::Right && ctx.accepting_inputs;
-    bool m1_pressed =  ctx.mice[1].current_buttons   & MouseButtons::Left && ctx.accepting_inputs;
-    bool m0_released = ctx.mice[0].released_buttons & MouseButtons::Right && ctx.accepting_inputs;
-    bool m1_released = ctx.mice[1].released_buttons & MouseButtons::Left && ctx.accepting_inputs;
+    bool m0_clicked =
+        ctx.mice[0].clicked_buttons.Includes(MouseButton::Right) && ctx.accepting_inputs;
+    bool m1_clicked =
+        ctx.mice[1].clicked_buttons.Includes(MouseButton::Left) && ctx.accepting_inputs;
+    bool m0_pressed =
+        ctx.mice[0].current_buttons.Includes(MouseButton::Right) && ctx.accepting_inputs;
+    bool m1_pressed =
+        ctx.mice[1].current_buttons.Includes(MouseButton::Left) && ctx.accepting_inputs;
+    bool m0_released =
+        ctx.mice[0].released_buttons.Includes(MouseButton::Right) && ctx.accepting_inputs;
+    bool m1_released =
+        ctx.mice[1].released_buttons.Includes(MouseButton::Left) && ctx.accepting_inputs;
 
     Color outline_c = Colors::darker_silver;
     if (m0_inside && m1_inside) {
@@ -73,8 +79,8 @@ void UI::Label(Rect const& rect, std::string_view const text, FontSize const siz
 void UI::DrawCursors(AppContext& ctx) {
     MousePosition const& mps0 = ctx.mice[0].position;
     MousePosition const& mps1 = ctx.mice[1].position;
-    bool m0_pressed = ctx.mice[0].current_buttons & MouseButtons::Right;
-    bool m1_pressed = ctx.mice[1].current_buttons & MouseButtons::Left;
+    bool m0_pressed = ctx.mice[0].current_buttons.Includes(MouseButton::Right);
+    bool m1_pressed = ctx.mice[1].current_buttons.Includes(MouseButton::Left);
 
     auto sc = ctx.renderer.scene;
     sc->DrawRectangle(mps0.x - 25, mps0.y, 25, 25,

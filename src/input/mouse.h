@@ -3,6 +3,7 @@
 #include <mutex>
 #include "common/types.h"
 #include "orbis/UserService.h"
+#include <utility>
 
 constexpr s32 ORBIS_MOUSE_ERROR_INVALID_ARG = 0x80DF0001;
 constexpr s32 ORBIS_MOUSE_ERROR_INVALID_HANDLE = 0x80DF0003;
@@ -38,20 +39,7 @@ s32 sceMouseClose(s32 handle);
 s32 sceMouseRead(s32 handle, OrbisMouseData* pData, s32 num);
 }
 
-struct MouseFrameState {
-    s32 dx = 0;
-    s32 dy = 0;
-    s32 wheel = 0;
-    s32 tilt = 0;
-    u32 buttons = 0;
-    u64 timestamp = 0;
-};
-
-struct MousePosition {
-    s32 x = 0, y = 0;
-};
-
-enum MouseButtons : u32 {
+enum class MouseButton : u32 {
     None = 0,
     Left = 1,
     Right = 2,
@@ -60,15 +48,37 @@ enum MouseButtons : u32 {
     Side2 = 16,
 };
 
+struct MouseButtonsState {
+    u32 bits{};
+
+    MouseButtonsState(u32 val = 0) : bits(val) {}
+    bool Includes(MouseButton btn) const {
+        return bits & u32(btn);
+    }
+};
+
+struct MouseFrameState {
+    s32 dx = 0;
+    s32 dy = 0;
+    s32 wheel = 0;
+    s32 tilt = 0;
+    MouseButtonsState buttons = 0;
+    u64 timestamp = 0;
+};
+
+struct MousePosition {
+    s32 x = 0, y = 0;
+};
+
 struct Mouse {
     s32 handle{};
 
     MouseFrameState delta{};
     MouseFrameState stable{};
 
-    u32 current_buttons{};
-    u32 clicked_buttons{};
-    u32 released_buttons{};
+    MouseButtonsState current_buttons{};
+    MouseButtonsState clicked_buttons{};
+    MouseButtonsState released_buttons{};
 
     MousePosition position{};
 

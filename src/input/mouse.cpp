@@ -32,7 +32,7 @@ void Mice::Init(OrbisUserServiceUserId const& uid) {
                             acc.wheel += d.wheel;
                             acc.tilt += d.tilt;
 
-                            acc.buttons |= d.buttons;
+                            acc.buttons.bits |= d.buttons;
                             acc.timestamp = d.timestamp;
                         }
                     }
@@ -61,8 +61,8 @@ void Mice::Update() {
         auto old = mouse.current_buttons;
         auto now = mouse.stable.buttons;
         mouse.current_buttons = now;
-        mouse.clicked_buttons = now & ~old;
-        mouse.released_buttons = old & ~now;
+        mouse.clicked_buttons = now.bits & ~old.bits;
+        mouse.released_buttons = old.bits & ~now.bits;
     }
 }
 
