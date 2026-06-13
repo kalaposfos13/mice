@@ -8,12 +8,15 @@ void App::Run() {
     ctx.scenes.Push<SettingsScene>();
     ctx.scenes.Update(0.0f);
 
+    ctx.mice.Recenter(0);
+    ctx.mice.Recenter(1);
+
     ctx.running = true;
     auto dt_prev = std::chrono::steady_clock::now();
 
     while (ctx.running) {
         ctx.pad.Update();
-        ctx.mice.UpdateState();
+        ctx.mice.Update();
 
         auto now = std::chrono::steady_clock::now();
         double dt = std::chrono::duration<double>(now - dt_prev).count();

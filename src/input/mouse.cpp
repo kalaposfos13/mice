@@ -44,7 +44,7 @@ void Mice::Init(OrbisUserServiceUserId const& uid) {
     reader.detach();
 }
 
-void Mice::UpdateState() {
+void Mice::Update() {
     std::scoped_lock l{mm};
     for (int m = 0; m < 2; m++) {
         if (delta_frame_state[m].timestamp == 0) {
@@ -75,4 +75,9 @@ Mice::~Mice() {
 void Mice::SetCursor(s32 which, s32 x, s32 y) {
     positions[which].x = x;
     positions[which].y = y;
+}
+
+void Mice::Recenter(s32 which) {
+    positions[which].x = 1920 / 2;
+    positions[which].y = 1080 / 2;
 }

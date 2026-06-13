@@ -20,6 +20,7 @@ void THIS_SCENE::Draw(AppContext& ctx) {
     ui.Label({700, 150}, "SETTINGS", FontSize::Large);
 
     if (ui.Button({700, 350, 500, 80}, "VIDEO", FontSize::Medium)) {
+        LOG_INFO("-> video");
         ctx.scenes.Push<VideoSettingsScene>();
     }
 
@@ -28,6 +29,7 @@ void THIS_SCENE::Draw(AppContext& ctx) {
     // }
 
     if (ui.Button({700, 550, 500, 80}, "ABOUT", FontSize::Medium)) {
+        LOG_INFO("-> about");
         ctx.scenes.Push<AboutOverlayScene>();
     }
 }

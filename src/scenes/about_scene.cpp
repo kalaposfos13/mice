@@ -15,7 +15,6 @@ void THIS_SCENE::Update(AppContext& ctx, float) {
 }
 
 void THIS_SCENE::Draw(AppContext& ctx) {
-    ctx.renderer.scene->DrawRectangle(400, 350, 700, 380, Color{0, 0, 180});
 
     UI ui{ctx};
 

@@ -1,7 +1,9 @@
 #pragma once
 
 #include <memory>
+#include <optional>
 #include <vector>
+#include "transition.h"
 
 class AppContext;
 class Scene;
@@ -12,6 +14,11 @@ public:
         Push,
         Pop,
         Replace,
+    };
+    enum class TransitionPhase {
+        None,
+        Out,
+        In,
     };
 
     struct Command {
@@ -39,12 +46,28 @@ public:
 
     void Update(float dt);
     void Draw();
+    void DrawCurrentScenes();
 
 private:
     void ApplyCommands();
-
+    void ExecuteCommand(Command& cmd);
+    bool RequiresTransition(Command const& cmd);
+    void BeginTransition(Command cmd);
+    void UpdateTransition(float dt);
+    void CaptureCurrentScene();
     AppContext& ctx;
 
     std::vector<std::unique_ptr<Scene>> stack;
     std::vector<Command> pending;
+
+    TransitionPhase transition_phase = TransitionPhase::None;
+
+    float transition_timer = 0.0f;
+
+    std::unique_ptr<Transition> active_transition;
+
+    std::optional<Command> transition_command;
+
+    Image old_capture;
+    Image new_capture;
 };

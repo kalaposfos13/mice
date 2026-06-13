@@ -75,6 +75,7 @@ public:
     Mice() {}
     ~Mice();
     void Init(OrbisUserServiceUserId const& uid);
-    void UpdateState();
+    void Update();
     void SetCursor(s32 which, s32 x, s32 y);
+    void Recenter(s32 which);
 };

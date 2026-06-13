@@ -13,6 +13,7 @@ public:
     void BeginFrame();
     void EndFrame();
 
+    void CaptureFramebuffer(Image& dst);
     void DrawImage(const Image& img, int x, int y);
 
     Scene2D* GetScene() { return scene; }

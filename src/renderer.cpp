@@ -37,6 +37,22 @@ void Renderer::EndFrame() {
     scene->FrameBufferSwap();
 }
 
+void Renderer::CaptureFramebuffer(Image& dst) {
+    u32* fb = reinterpret_cast<u32*>(scene->frameBuffers[scene->activeFrameBufferIdx]);
+
+    ASSERT(fb != nullptr);
+
+    const int width = scene->width;
+    const int height = scene->height;
+
+    if (dst.width != width || dst.height != height || dst.pixels == nullptr) {
+        dst.Free();
+        ASSERT(dst.Allocate(width, height));
+    }
+
+    std::memcpy(dst.pixels, fb, width * height * sizeof(uint32_t));
+}
+
 void Renderer::DrawImage(const Image& img, int x, int y) {
     auto* fb = (uint32_t*)scene->frameBuffers[scene->activeFrameBufferIdx];
     ASSERT(fb != nullptr);

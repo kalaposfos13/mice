@@ -12,8 +12,8 @@ public:
     virtual void Update(AppContext& ctx, float dt) = 0;
     virtual void Draw(AppContext& ctx) = 0;
 
-    virtual bool BlocksScenesBelow() const {
-        return true;
+    virtual bool IsOverlay() const {
+        return false;
     }
 };
 
@@ -32,8 +32,8 @@ public:
         void Leave(AppContext& ctx) override;                                                      \
         void Update(AppContext& ctx, float dt) override;                                           \
         void Draw(AppContext& ctx) override;                                                       \
-        bool BlocksScenesBelow() const override {                                                  \
-            return false;                                                                          \
+        bool IsOverlay() const override {                                                          \
+            return true;                                                                           \
         }                                                                                          \
     };
 
