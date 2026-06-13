@@ -81,18 +81,14 @@ void SceneManager::DrawCurrentScenes() {
     }
 
     bool old_accepting = ctx.accepting_inputs;
-
     ctx.accepting_inputs = false;
 
     for (size_t i = first_visible; i < stack.size() - 1; i++) {
         stack[i]->Draw(ctx);
     }
 
-    ctx.accepting_inputs = true;
-
-    stack.back()->Draw(ctx);
-
     ctx.accepting_inputs = old_accepting;
+    stack.back()->Draw(ctx);
 }
 
 void SceneManager::ApplyCommands() {
@@ -177,6 +173,8 @@ bool SceneManager::RequiresTransition(Command const& cmd) {
 
 void SceneManager::BeginTransition(Command cmd) {
     LOG_INFO("called");
+    accepting_before_transition = ctx.accepting_inputs;
+    ctx.accepting_inputs = false;
     transition_command = std::move(cmd);
 
     active_transition = std::make_unique<FadeTransition>();
@@ -208,6 +206,7 @@ void SceneManager::UpdateTransition(double dt) {
 
             active_transition.reset();
             transition_command.reset();
+            ctx.accepting_inputs = accepting_before_transition;
         }
     }
 }

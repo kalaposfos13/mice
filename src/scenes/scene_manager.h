@@ -63,6 +63,7 @@ private:
     TransitionPhase transition_phase = TransitionPhase::None;
 
     float transition_timer = 0.0f;
+    bool accepting_before_transition;
 
     std::unique_ptr<Transition> active_transition;
 
