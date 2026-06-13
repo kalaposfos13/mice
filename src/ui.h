@@ -42,6 +42,7 @@ struct UITheme {
 
     Color hover_m0;
     Color hover_m1;
+    Color dual_hover;
 
     Color active_m0;
     Color active_m1;

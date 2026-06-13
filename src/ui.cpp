@@ -36,6 +36,7 @@ UITheme UI::default_theme = {
 
     .hover_m0 = Colors::orange,
     .hover_m1 = Colors::cyan,
+    .dual_hover = Colors::bright_yellow,
 
     .active_m0 = Colors::bright_orange,
     .active_m1 = Colors::bright_cyan,
@@ -83,7 +84,7 @@ static Color GetMainColorForState(WidgetState const& state, UITheme const& theme
         ret = state.held_m0 && state.held_m1 ? Colors::white
               : state.held_m0                ? theme.active_m0
               : state.held_m1                ? theme.active_m1
-                                             : theme.accent_secondary;
+                                             : theme.dual_hover;
     } else if (state.hovered_m0) {
         ret = state.held_m0 ? theme.active_m0 : theme.hover_m0;
     } else if (state.hovered_m1) {
