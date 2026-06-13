@@ -17,6 +17,7 @@ void THIS_SCENE::Update(AppContext& ctx, double dt) {
 void THIS_SCENE::Draw(AppContext& ctx) {
     UI ui{ctx};
 
+    ui.Panel({600, 100, 700, 700});
     ui.Label({700, 150}, "SETTINGS", FontSize::Large);
 
     if (ui.Button({700, 350, 500, 80}, "VIDEO", FontSize::Medium)) {
