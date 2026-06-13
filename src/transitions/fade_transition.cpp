@@ -5,7 +5,7 @@
 #include "app_context.h"
 
 float FadeTransition::Duration() const {
-    return 0.25f;
+    return 0.1f;
 }
 
 void FadeTransition::DrawOut(AppContext& ctx, const Image& image, float t) {
