@@ -8,7 +8,7 @@ void THIS_SCENE::Enter(AppContext&) {}
 
 void THIS_SCENE::Leave(AppContext&) {}
 
-void THIS_SCENE::Update(AppContext& ctx, float) {
+void THIS_SCENE::Update(AppContext& ctx, double dt) {
     if (ctx.pad.IsPressed(OrbisPadButton::ORBIS_PAD_BUTTON_CIRCLE)) {
         ctx.scenes.Pop();
     }
@@ -18,7 +18,9 @@ void THIS_SCENE::Draw(AppContext& ctx) {
 
     UI ui{ctx};
 
-    ui.Label({700, 350}, "M.I.C.E.");
-    ui.Label({600, 450}, "Overlay test scene");
-    ui.Label({550, 550}, "Press Circle to close");
+    ctx.renderer.scene->DrawRectangle(1120, 300, 550, 350, Colors::blue);
+
+    ui.Label({700 + 600, 350}, "M.I.C.E.");
+    ui.Label({600 + 600, 450}, "Overlay test scene");
+    ui.Label({550 + 600, 550}, "Press Circle to close");
 }

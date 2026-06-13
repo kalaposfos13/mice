@@ -3,7 +3,7 @@
 #include <memory>
 #include <optional>
 #include <vector>
-#include "transition.h"
+#include "transitions/transition.h"
 
 class AppContext;
 class Scene;
@@ -44,7 +44,7 @@ public:
 
     Scene* Current();
 
-    void Update(float dt);
+    void Update(double dt);
     void Draw();
     void DrawCurrentScenes();
 
@@ -53,7 +53,7 @@ private:
     void ExecuteCommand(Command& cmd);
     bool RequiresTransition(Command const& cmd);
     void BeginTransition(Command cmd);
-    void UpdateTransition(float dt);
+    void UpdateTransition(double dt);
     void CaptureCurrentScene();
     AppContext& ctx;
 

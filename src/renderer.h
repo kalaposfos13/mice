@@ -14,9 +14,12 @@ public:
     void EndFrame();
 
     void CaptureFramebuffer(Image& dst);
-    void DrawImage(const Image& img, int x, int y);
+    void DrawImage(Image const& img, int x, int y);
+    void DrawImageDarkened(Image const& img, int x, int y, float factor);
 
-    Scene2D* GetScene() { return scene; }
+    Scene2D* GetScene() {
+        return scene;
+    }
 
     bool use_font = true;
     Scene2D* scene{};

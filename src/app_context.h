@@ -1,7 +1,7 @@
 #pragma once
 
-#include "common/logging.h"
 #include "common/assert.h"
+#include "common/logging.h"
 #include "input/mouse.h"
 #include "input/pad.h"
 #include "renderer.h"

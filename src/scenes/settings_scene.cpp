@@ -1,5 +1,5 @@
-#include "scene.h"
 #include "app_context.h"
+#include "scene.h"
 #include "ui.h"
 
 #define THIS_SCENE SettingsScene
@@ -8,7 +8,7 @@ void THIS_SCENE::Enter(AppContext&) {}
 
 void THIS_SCENE::Leave(AppContext&) {}
 
-void THIS_SCENE::Update(AppContext& ctx, float) {
+void THIS_SCENE::Update(AppContext& ctx, double dt) {
     if (ctx.pad.IsPressed(OrbisPadButton::ORBIS_PAD_BUTTON_CIRCLE)) {
         ctx.scenes.Pop();
     }

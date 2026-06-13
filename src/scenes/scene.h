@@ -9,7 +9,7 @@ public:
     virtual void Enter(AppContext& ctx) {}
     virtual void Leave(AppContext& ctx) {}
 
-    virtual void Update(AppContext& ctx, float dt) = 0;
+    virtual void Update(AppContext& ctx, double dt) = 0;
     virtual void Draw(AppContext& ctx) = 0;
 
     virtual bool IsOverlay() const {
@@ -22,7 +22,7 @@ public:
     public:                                                                                        \
         void Enter(AppContext& ctx) override;                                                      \
         void Leave(AppContext& ctx) override;                                                      \
-        void Update(AppContext& ctx, float dt) override;                                           \
+        void Update(AppContext& ctx, double dt) override;                                          \
         void Draw(AppContext& ctx) override;                                                       \
     };
 #define DECLARE_OVERLAY_SCENE(name)                                                                \
@@ -30,7 +30,7 @@ public:
     public:                                                                                        \
         void Enter(AppContext& ctx) override;                                                      \
         void Leave(AppContext& ctx) override;                                                      \
-        void Update(AppContext& ctx, float dt) override;                                           \
+        void Update(AppContext& ctx, double dt) override;                                          \
         void Draw(AppContext& ctx) override;                                                       \
         bool IsOverlay() const override {                                                          \
             return true;                                                                           \

@@ -6,30 +6,26 @@
 #include "renderer.h"
 #include "ui.h"
 
-float FadeTransition::Duration() const {
-    return 0.25f;
+float DebugTransition::Duration() const {
+    return 0.5f;
 }
 
-void FadeTransition::DrawOut(
-    AppContext& ctx,
-    const Image& image,
-    float t)
-{
+void DebugTransition::DrawOut(AppContext& ctx, const Image& image, float t) {
     t = std::clamp(t, 0.0f, 1.0f);
+
+    ctx.renderer.DrawImage(image, 0, 0);
 
     UI ui{ctx};
     auto debug_text = fmt::format("Fade out t: {}", t);
     ui.Label({100, 100}, debug_text);
 }
 
-void FadeTransition::DrawIn(
-    AppContext& ctx,
-    const Image& image,
-    float t)
-{
+void DebugTransition::DrawIn(AppContext& ctx, const Image& image, float t) {
     t = std::clamp(t, 0.0f, 1.0f);
+
+    ctx.renderer.DrawImage(image, 0, 0);
 
     UI ui{ctx};
     auto debug_text = fmt::format("Fade in t: {}", t);
-    ui.Label({100, 100}, debug_text);
+    ui.Label({100, 200}, debug_text);
 }

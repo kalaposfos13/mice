@@ -30,7 +30,7 @@ Scene* SceneManager::Current() {
     return stack.empty() ? nullptr : stack.back().get();
 }
 
-void SceneManager::Update(float dt) {
+void SceneManager::Update(double dt) {
     if (transition_phase != TransitionPhase::None) {
         UpdateTransition(dt);
         return;
@@ -97,7 +97,7 @@ void SceneManager::DrawCurrentScenes() {
 
 void SceneManager::ApplyCommands() {
     for (auto& cmd : pending) {
-        if (RequiresTransition(cmd)) {
+        if (RequiresTransition(cmd) && !Current()->IsOverlay()) {
             BeginTransition(std::move(cmd));
             break;
         }
@@ -149,7 +149,6 @@ void SceneManager::ExecuteCommand(Command& cmd) {
 }
 
 bool SceneManager::RequiresTransition(Command const& cmd) {
-    LOG_INFO("called");
     if (stack.size() == 0) {
         return false;
     }
@@ -171,7 +170,7 @@ bool SceneManager::RequiresTransition(Command const& cmd) {
 
     auto ret = scene && !scene->IsOverlay();
 
-    LOG_INFO("ret: {}, is_overlay: {}", ret, scene->IsOverlay());
+    LOG_INFO("{}", ret);
 
     return ret;
 }
@@ -188,8 +187,7 @@ void SceneManager::BeginTransition(Command cmd) {
     transition_phase = TransitionPhase::Out;
 }
 
-void SceneManager::UpdateTransition(float dt) {
-    LOG_INFO("called");
+void SceneManager::UpdateTransition(double dt) {
     transition_timer += dt;
 
     float t = transition_timer / active_transition->Duration();
@@ -218,6 +216,5 @@ void SceneManager::CaptureCurrentScene() {
     LOG_INFO("called");
     ctx.renderer.scene->FrameBufferClear();
     DrawCurrentScenes();
-
     ctx.renderer.CaptureFramebuffer(new_capture);
 }

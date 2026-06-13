@@ -1,6 +1,9 @@
-#include "scene.h"
 #include "app_context.h"
 #include "common/logging.h"
+#include "scene.h"
+#include "ui.h"
+
+static double elapsed_time = 0.0;
 
 void BasicScene::Enter(AppContext& ctx) {
     LOG_INFO("Entered basic scene");
@@ -12,7 +15,8 @@ void BasicScene::Leave(AppContext& ctx) {
     LOG_INFO("Exited basic scene");
 }
 
-void BasicScene::Update(AppContext& ctx, float dt) {
+void BasicScene::Update(AppContext& ctx, double dt) {
+    elapsed_time += dt;
     if (ctx.pad.IsPressed(OrbisPadButton::ORBIS_PAD_BUTTON_CIRCLE)) {
         ctx.running = false;
     }
@@ -25,6 +29,6 @@ void BasicScene::Draw(AppContext& ctx) {
     MousePosition const& mps0 = ctx.mice.positions[0];
     MousePosition const& mps1 = ctx.mice.positions[1];
 
-    ctx.renderer.scene->DrawRectangle(mps0.x, mps0.y, 25, 25, {255, 0, 0});
-    ctx.renderer.scene->DrawRectangle(mps1.x, mps1.y, 25, 25, {0, 255, 0});
+    UI ui{ctx};
+    ui.Label({100, 300}, fmt::format("seconds: {}", std::floor(elapsed_time)));
 }
