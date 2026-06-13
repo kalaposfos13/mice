@@ -2,11 +2,15 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <orbis/SystemService.h>
+#include <unistd.h>
 #include "assert.h"
 #include "logging.h"
-#include <unistd.h>
 
-#define Crash() do { LOG_NOTIFICATION("Crash"); sceSystemServiceLoadExec("exit", nullptr); } while (0)
+#define Crash()                                                                                    \
+    do {                                                                                           \
+        LOG_NOTIFICATION("Crash");                                                                 \
+        sceSystemServiceLoadExec("exit", nullptr);                                                 \
+    } while (0)
 
 void assert_fail_impl() {
     std::fflush(stdout);
@@ -21,8 +25,7 @@ void assert_fail_impl() {
     throw std::runtime_error("Unreachable code");
 }
 
-extern "C"
-void __cxa_thread_atexit_impl() {
+extern "C" void __cxa_thread_atexit_impl() {
     // LOG_INFO("Atexit called");
 }
 

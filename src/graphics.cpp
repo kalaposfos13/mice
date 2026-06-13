@@ -6,8 +6,8 @@
 #include <string>
 
 #include "common/logging.h"
-#include "graphics.h"
 #include "common/types.h"
+#include "graphics.h"
 
 Scene2D::Scene2D(int w, int h, int pixelDepth)
     : width(w), height(h), depth(pixelDepth),

@@ -1,8 +1,8 @@
 #pragma once
 
 #include <mutex>
-#include "orbis/UserService.h"
 #include "common/types.h"
+#include "orbis/UserService.h"
 
 constexpr s32 ORBIS_MOUSE_ERROR_INVALID_ARG = 0x80DF0001;
 constexpr s32 ORBIS_MOUSE_ERROR_INVALID_HANDLE = 0x80DF0003;

@@ -11,7 +11,7 @@ public:
     Pad() = default;
     ~Pad();
     void Init(s32 user_id);
-    
+
     void Update();
 
     bool IsHeld(OrbisPadButton b);

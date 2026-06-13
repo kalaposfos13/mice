@@ -23,10 +23,10 @@ public:
     int height{};
     int stride{};
 
-    uint32_t* pixels{};         // mapped pointer
+    uint32_t* pixels{}; // mapped pointer
 private:
-    size_t size{};              // requested size
-    size_t alignedSize{};       // actual allocated size
+    size_t size{};        // requested size
+    size_t alignedSize{}; // actual allocated size
 
-    u64 directMemOff{};       // handle for freeing
+    u64 directMemOff{}; // handle for freeing
 };
