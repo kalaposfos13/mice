@@ -152,7 +152,7 @@ add_custom_command(
         CONTENT_ID --type Utf8 --maxsize 48 --value ${CONTENT_ID} > /dev/null
 
     COMMAND ${OO_PS4_TOOLCHAIN}/bin/linux/PkgTool.Core sfo_setentry ${SFO_BUILD}
-        TITLE --type Utf8 --maxsize 128 --value ${CONTENT_ID} > /dev/null
+        TITLE --type Utf8 --maxsize 128 --value ${PKG_TITLE} > /dev/null
 
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
         ${SFO_BUILD}
