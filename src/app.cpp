@@ -12,13 +12,13 @@ void App::Run() {
     ctx.mice.Recenter(1);
 
     ctx.running = true;
-    auto dt_prev = std::chrono::steady_clock::now();
+    auto dt_prev = std::chrono::system_clock::now();
 
     while (ctx.running) {
         ctx.pad.Update();
         ctx.mice.Update();
 
-        auto now = std::chrono::steady_clock::now();
+        auto now = std::chrono::system_clock::now();
         double dt = std::chrono::duration<double>(now - dt_prev).count();
         dt_prev = now;
         ctx.scenes.Update(dt);
@@ -37,9 +37,7 @@ App::App() {
     LOG_INFO("userid: {:x}", (u32)ctx.user_id);
     ctx.pad.Init(ctx.user_id);
     ctx.mice.Init(ctx.user_id);
-    LOG_INFO("ui");
     UI::InitFonts(ctx);
-    LOG_INFO("end");
 }
 
 App::~App() {
