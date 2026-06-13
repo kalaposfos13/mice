@@ -1,6 +1,5 @@
 #include "app_context.h"
 #include "scene.h"
-#include "ui.h"
 
 #define THIS_SCENE MainMenuScene
 
@@ -50,13 +49,7 @@ void THIS_SCENE::Draw(AppContext& ctx) {
     if (steady_progress > 1.0f)
         steady_progress = 0.0f;
 
-    VerticalLayout layout{
-        .x = 80,
-        .y = 80,
-        .width = 500,
-        .height = 60,
-        .spacing = 15,
-    };
+    VerticalLayout layout{80, 80, 500, 60, 15};
 
     ui.Panel({50, 50, 575, 750});
 
@@ -78,7 +71,7 @@ void THIS_SCENE::Draw(AppContext& ctx) {
     ui.Separator(layout.Next());
 
     // Checkbox
-    auto cb = ui.Checkbox(layout.Next(), checkbox_value, "");
+    auto cb = ui.Checkbox(layout.Next(), checkbox_value, "Checkbox");
     checkbox_value = cb.value;
 
     ui.Label({650, 400}, cb.value ? "Checkbox: ON" : "Checkbox: OFF", FontSize::Small);
@@ -117,5 +110,9 @@ void THIS_SCENE::Draw(AppContext& ctx) {
 
     if (big.hovered_m0 && big.hovered_m1) {
         ui.Label({1100, 610}, "Both mice hovering", FontSize::Small);
+    }
+
+    if (ui.Button({1300, 900, 450, 100}, "Scene editor", FontSize::Large)) {
+        ctx.scenes.Push<SceneDesignerScene>();
     }
 }

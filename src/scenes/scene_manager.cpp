@@ -2,7 +2,6 @@
 
 #include "app_context.h"
 #include "scene.h"
-#include "ui.h"
 
 SceneManager::SceneManager(AppContext& ctx) : ctx(ctx) {}
 
@@ -165,8 +164,6 @@ bool SceneManager::RequiresTransition(Command const& cmd) {
     }
 
     auto ret = scene && !scene->IsOverlay();
-
-    LOG_INFO("{}", ret);
 
     return ret;
 }

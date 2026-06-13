@@ -8,8 +8,9 @@
 #include "scenes/scene_manager.h"
 
 #include <memory>
+#include <filesystem>
 
-extern std::string APP_ROOT;
+extern std::filesystem::path APP_ROOT, WORKDIR_ROOT;
 
 struct Settings {};
 

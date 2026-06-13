@@ -1,6 +1,8 @@
 #pragma once
 
-#include "app_context.h"
+#include "common/types.h"
+#include "input/mouse.h"
+#include "display/graphics.h"
 
 namespace Colors {
 static constexpr Color red{255, 0, 0};
@@ -103,51 +105,4 @@ struct CheckboxState {
 struct SliderState {
     WidgetState interaction;
     float value{};
-};
-
-class VerticalLayout {
-public:
-    s32 x{};
-    s32 y{};
-    s32 width{};
-    s32 height{};
-    s32 spacing{};
-
-    Rect Next() {
-        Rect r{x, y, width, height};
-
-        y += height + spacing;
-
-        return r;
-    }
-};
-
-class UI {
-public:
-    explicit UI(AppContext&);
-
-    static UITheme default_theme;
-    UITheme const& theme() const { return theme_; }
-
-    static void InitFonts(AppContext&);
-    static void DrawCursors(AppContext&);
-
-    WidgetState Button(Rect const& rect, std::string_view text, FontSize size = FontSize::Medium);
-    CheckboxState Checkbox(Rect const& rect, bool value, std::string_view label = {});
-    SliderState Slider(Rect const& rect, float value, float min, float max, float step = 0);
-    void Label(Point pos, std::string_view text, FontSize size = FontSize::Medium);
-    void Panel(Rect const& rect, Color fill = Colors::background, Color border = Colors::silver);
-    void Separator(s32 x, s32 y, s32 width);
-    void Separator(Rect r);
-    void ProgressBar(Rect const& rect, float value);
-
-private:
-    WidgetState Evaluate(Rect const& rect);
-
-    static s32 GetFontActualSize(FontSize);
-
-    AppContext& ctx;
-    UITheme const& theme_ = default_theme;
-
-    static FT_Face fonts[3];
 };

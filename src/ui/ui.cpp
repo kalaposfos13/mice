@@ -1,3 +1,4 @@
+#include "app_context.h"
 #include "common/logging.h"
 #include "ui.h"
 
@@ -5,7 +6,7 @@ UI::UI(AppContext& _ctx) : ctx(_ctx) {}
 
 FT_Face UI::fonts[3]{};
 void UI::InitFonts(AppContext& ctx) {
-    std::string font_path = APP_ROOT + "assets/fonts/Monocraft.ttf";
+    std::string font_path = APP_ROOT / "assets/fonts/Monocraft.ttf";
     for (int i = 0; i < 3; i++) {
         if (ctx.renderer.scene->InitFont(&fonts[i], font_path.c_str(),
                                          GetFontActualSize((FontSize)i)) &&
@@ -134,6 +135,18 @@ void UI::Panel(Rect const& rect, Color fill, Color border) {
     ctx.renderer.scene->DrawRectangleWithBorder(rect.x, rect.y, rect.w, rect.h, fill, 10, border);
 }
 
+VerticalLayout UI::VerticalLayoutPanel(Rect const& panel, s32 padding, s32 item_height,
+                                       s32 spacing) {
+    return VerticalLayout{panel.x + padding, panel.y + padding, panel.w - padding * 2, item_height,
+                          spacing};
+}
+
+HorizontalLayout UI::HorizontalLayoutPanel(Rect const& panel, s32 padding, s32 item_width,
+                                           s32 spacing) {
+    return HorizontalLayout{panel.x + padding, panel.y + padding, item_width, panel.h - padding * 2,
+                            spacing};
+}
+
 CheckboxState UI::Checkbox(Rect const& rect, bool value, std::string_view label) {
     auto state = Evaluate(rect);
 
@@ -141,17 +154,21 @@ CheckboxState UI::Checkbox(Rect const& rect, bool value, std::string_view label)
         value = !value;
     }
 
-    Color fill = value ? theme_.accent : theme_.control_fill;
+    const int box_size = rect.h;
+    Rect box{rect.x, rect.y, box_size, box_size};
+    Rect label_r{rect.x + box_size + 15, rect.y, rect.w - box_size - 15, rect.h};
 
-    ctx.renderer.scene->DrawRectangleWithBorder(rect.x, rect.y, rect.w, rect.h, theme_.control_fill,
+    Color fill = value ? state.held ? theme_.accent_secondary : theme_.accent : theme_.control_fill;
+
+    ctx.renderer.scene->DrawRectangleWithBorder(box.x, box.y, box.w, box.h, theme_.control_fill,
                                                 4, GetMainColorForState(state, theme_));
 
     if (value) {
-        ctx.renderer.scene->DrawRectangle(rect.x + 8, rect.y + 8, rect.w - 16, rect.h - 16, fill);
+        ctx.renderer.scene->DrawRectangle(box.x + 8, box.y + 8, box.w - 16, box.h - 16, fill);
     }
 
     if (!label.empty()) {
-        Label({rect.x + rect.w + 15, rect.y + 4}, label);
+        Label({label_r.x + 10, label_r.y + 4}, label);
     }
 
     return {state, value};
@@ -185,15 +202,14 @@ SliderState UI::Slider(Rect const& rect, float value, float min, float max, floa
         }
     }
 
-    ctx.renderer.scene->DrawRectangleWithBorder(
-        rect.x, rect.y, rect.w, rect.h, theme_.control_fill, 3,
-        GetMainColorForState(state, theme_));
+    ctx.renderer.scene->DrawRectangleWithBorder(rect.x, rect.y, rect.w, rect.h, theme_.control_fill,
+                                                3, GetMainColorForState(state, theme_));
 
     float t = (value - min) / (max - min);
 
     int knob_x = track.x + int(t * track.w);
 
-    auto knob_c = state.hovered ? theme_.accent : theme_.accent_secondary;
+    auto knob_c = state.hovered ? theme_.accent_secondary : theme_.accent;
 
     ctx.renderer.scene->DrawRectangle(knob_x - 10, rect.y - 5, 20, rect.h + 10, knob_c);
 

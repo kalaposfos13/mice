@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ui/ui.h"
+
 class AppContext;
 
 class Scene {
@@ -44,3 +46,4 @@ DECLARE_SCENE(SettingsScene)
 DECLARE_SCENE(VideoSettingsScene)
 DECLARE_SCENE(AudioSettingsScene)
 DECLARE_OVERLAY_SCENE(AboutOverlayScene)
+DECLARE_SCENE(SceneDesignerScene)

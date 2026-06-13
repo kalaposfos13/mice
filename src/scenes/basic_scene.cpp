@@ -1,7 +1,7 @@
 #include "app_context.h"
 #include "common/logging.h"
 #include "scene.h"
-#include "ui.h"
+#include "ui/ui.h"
 
 static double elapsed_time = 0.0;
 
