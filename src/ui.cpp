@@ -23,20 +23,22 @@ UITheme UI::default_theme = {
     .panel_fill = Colors::background,
     .panel_border = Colors::silver,
 
-    .text = Colors::white,
-    .text_shadow = Colors::black,
-
-    .control_bg = Colors::gray,
+    .control_fill = Colors::silver,
     .control_border = Colors::darker_silver,
+
+    .text = Colors::black,
+    .text_outline = Colors::black,
+
+    .accent = Colors::green,
+    .accent_secondary = Colors::bright_yellow,
+
+    .separator = Colors::gray,
 
     .hover_m0 = Colors::orange,
     .hover_m1 = Colors::cyan,
 
     .active_m0 = Colors::bright_orange,
     .active_m1 = Colors::bright_cyan,
-
-    .accent = Colors::green,
-    .accent_dim = Colors::silver,
 };
 
 WidgetState UI::Evaluate(Rect const& rect) {
@@ -74,42 +76,42 @@ WidgetState UI::Evaluate(Rect const& rect) {
     return s;
 }
 
-static Color GetMainColorForState(WidgetState const& state) {
-
-    Color ret = Colors::darker_silver;
+static Color GetMainColorForState(WidgetState const& state, UITheme const& theme) {
+    Color ret = theme.control_border;
 
     if (state.hovered_m0 && state.hovered_m1) {
         ret = state.held_m0 && state.held_m1 ? Colors::white
-              : state.held_m0                ? Colors::bright_orange
-              : state.held_m1                ? Colors::bright_cyan
-                                             : Colors::bright_yellow;
+              : state.held_m0                ? theme.active_m0
+              : state.held_m1                ? theme.active_m1
+                                             : theme.accent_secondary;
     } else if (state.hovered_m0) {
-        ret = state.held_m0 ? Colors::bright_orange : Colors::orange;
+        ret = state.held_m0 ? theme.active_m0 : theme.hover_m0;
     } else if (state.hovered_m1) {
-        ret = state.held_m1 ? Colors::bright_cyan : Colors::cyan;
+        ret = state.held_m1 ? theme.active_m1 : theme.hover_m1;
     }
+
     return ret;
 }
 
 WidgetState UI::Button(Rect const& rect, std::string_view text, FontSize size) {
     WidgetState state = Evaluate(rect);
 
-    Color outline = GetMainColorForState(state);
+    Color outline = GetMainColorForState(state, theme_);
 
-    ctx.renderer.scene->DrawRectangleWithBorder(rect.x, rect.y, rect.w, rect.h, Colors::silver, 10,
-                                                outline);
+    ctx.renderer.scene->DrawRectangleWithBorder(rect.x, rect.y, rect.w, rect.h, theme_.control_fill,
+                                                10, outline);
 
     ctx.renderer.scene->DrawText(text.data(), fonts[(u32)size], rect.x + 15,
-                                 rect.y + 15 + GetFontActualSize(size), Colors::silver,
-                                 Colors::black);
+                                 rect.y + 15 + GetFontActualSize(size), theme_.control_fill,
+                                 theme_.text);
 
     return state;
 }
 
 void UI::Label(Point pos, std::string_view const text, FontSize const size) {
     ctx.renderer.scene->DrawText(text.data(), fonts[(u32)size], pos.x + 7,
-                                 pos.y + 7 + GetFontActualSize(size), Colors::background,
-                                 Colors::black);
+                                 pos.y + 7 + GetFontActualSize(size), theme_.panel_fill,
+                                 theme_.text);
 }
 
 void UI::DrawCursors(AppContext& ctx) {
@@ -138,10 +140,10 @@ CheckboxState UI::Checkbox(Rect const& rect, bool value, std::string_view label)
         value = !value;
     }
 
-    Color fill = value ? theme_.accent : theme_.control_bg;
+    Color fill = value ? theme_.accent : theme_.control_fill;
 
-    ctx.renderer.scene->DrawRectangleWithBorder(rect.x, rect.y, rect.w, rect.h, Colors::background,
-                                                4, GetMainColorForState(state));
+    ctx.renderer.scene->DrawRectangleWithBorder(rect.x, rect.y, rect.w, rect.h, theme_.control_fill,
+                                                4, GetMainColorForState(state, theme_));
 
     if (value) {
         ctx.renderer.scene->DrawRectangle(rect.x + 8, rect.y + 8, rect.w - 16, rect.h - 16, fill);
@@ -183,17 +185,14 @@ SliderState UI::Slider(Rect const& rect, float value, float min, float max, floa
     }
 
     ctx.renderer.scene->DrawRectangleWithBorder(
-        rect.x, rect.y, rect.w, rect.h, Colors::background, 3,
-        state.hovered ? Colors::dim_white : theme_.panel_border);
+        rect.x, rect.y, rect.w, rect.h, theme_.control_fill, 3,
+        GetMainColorForState(state, theme_));
 
     float t = (value - min) / (max - min);
 
     int knob_x = track.x + int(t * track.w);
 
-    auto knob_c = GetMainColorForState(state);
-    if (!state.hovered) {
-        knob_c = Colors::bright_yellow;
-    }
+    auto knob_c = state.hovered ? theme_.accent : theme_.accent_secondary;
 
     ctx.renderer.scene->DrawRectangle(knob_x - 10, rect.y - 5, 20, rect.h + 10, knob_c);
 
@@ -201,19 +200,19 @@ SliderState UI::Slider(Rect const& rect, float value, float min, float max, floa
 }
 
 void UI::Separator(s32 x, s32 y, s32 width) {
-    ctx.renderer.scene->DrawRectangle(x, y, width, 2, Colors::gray);
+    ctx.renderer.scene->DrawRectangle(x, y, width, 2, theme_.separator);
 }
 
 void UI::Separator(Rect r) {
-    ctx.renderer.scene->DrawRectangle(r.x, r.y + r.h / 2, r.w, 2, Colors::gray);
+    ctx.renderer.scene->DrawRectangle(r.x, r.y + r.h / 2, r.w, 2, theme_.separator);
 }
 
 void UI::ProgressBar(Rect const& rect, float value) {
     value = std::clamp(value, 0.0f, 1.0f);
 
-    ctx.renderer.scene->DrawRectangleWithBorder(rect.x, rect.y, rect.w, rect.h, Colors::background,
-                                                3, Colors::silver);
+    ctx.renderer.scene->DrawRectangleWithBorder(rect.x, rect.y, rect.w, rect.h, theme_.control_fill,
+                                                3, theme_.control_fill);
 
     ctx.renderer.scene->DrawRectangle(rect.x + 3, rect.y + 3, int((rect.w - 6) * value), rect.h - 6,
-                                      Colors::green);
+                                      theme_.accent);
 }

@@ -42,7 +42,7 @@ void THIS_SCENE::Draw(AppContext& ctx) {
     static float progress = 0.0f;
     static float steady_progress = 0.0f;
 
-    progress += deltatime * 0.1f;
+    progress += deltatime;
     if (progress > 1.0f)
         progress = 0.0f;
 

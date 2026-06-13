@@ -4,7 +4,7 @@
 
 namespace Colors {
 static constexpr Color red{255, 0, 0};
-static constexpr Color green{0, 255, 0};
+static constexpr Color green{0, 175, 0};
 static constexpr Color blue{0, 0, 255};
 static constexpr Color black{0, 0, 0};
 static constexpr Color white{255, 255, 255};
@@ -29,20 +29,22 @@ struct UITheme {
     Color panel_fill;
     Color panel_border;
 
-    Color text;
-    Color text_shadow;
-
-    Color control_bg;
+    Color control_fill;
     Color control_border;
+
+    Color text;
+    Color text_outline;
+
+    Color accent;
+    Color accent_secondary;
+
+    Color separator;
 
     Color hover_m0;
     Color hover_m1;
 
     Color active_m0;
     Color active_m1;
-
-    Color accent;
-    Color accent_dim;
 };
 
 struct Point {
