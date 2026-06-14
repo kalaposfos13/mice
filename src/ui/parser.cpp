@@ -4,16 +4,6 @@
 #include <fstream>
 #include <sstream>
 
-static std::string UnderscoresToSpaces(std::string text) {
-    for (char& c : text) {
-        if (c == '_') {
-            c = ' ';
-        }
-    }
-
-    return text;
-}
-
 Layout* PanelLoader::CurrentLayout() {
     if (layouts.empty()) {
         return nullptr;
@@ -91,8 +81,7 @@ bool PanelLoader::Load(std::filesystem::path const& path, std::vector<WidgetDefi
             } else {
                 ss >> w.rect.x >> w.rect.y;
             }
-            ss >> w.text;
-            w.text = UnderscoresToSpaces(std::move(w.text));
+            std::getline(ss >> std::ws, w.text);
 
             widgets.push_back(std::move(w));
             continue;
@@ -139,8 +128,7 @@ bool PanelLoader::Load(std::filesystem::path const& path, std::vector<WidgetDefi
             } else {
                 ss >> w.rect.x >> w.rect.y >> w.rect.w >> w.rect.h;
             }
-            ss >> w.text;
-            w.text = UnderscoresToSpaces(std::move(w.text));
+            std::getline(ss >> std::ws, w.text);
 
             widgets.push_back(std::move(w));
 
@@ -160,11 +148,9 @@ bool PanelLoader::Load(std::filesystem::path const& path, std::vector<WidgetDefi
                 ss >> w.rect.x >> w.rect.y >> w.rect.w >> w.rect.h;
             }
             ss >> checked;
-            ss >> w.text;
+            std::getline(ss >> std::ws, w.text);
 
             w.bool_value = checked != 0;
-
-            w.text = UnderscoresToSpaces(std::move(w.text));
 
             widgets.push_back(std::move(w));
 
