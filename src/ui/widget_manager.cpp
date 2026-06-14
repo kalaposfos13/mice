@@ -2,12 +2,10 @@
 #include "widget_manager.h"
 #include "common/logging.h"
 
-bool WidgetManager::Load(std::filesystem::path const& path) {
+void WidgetManager::Load(std::filesystem::path const& path) {
     path_ = path;
-
     Reload();
-
-    return true;
+    return;
 }
 
 void WidgetManager::Reload() {
@@ -39,34 +37,53 @@ void WidgetManager::Update() {
     }
 }
 
-void WidgetManager::Bind(std::string const& id, WidgetState* value) {
-    bindings_[id] = value;
+void WidgetManager::Bind(std::string const& id, WidgetState* value, BindingMode const mode) {
+    if (mode == BindingMode::ReadWrite) {
+        rw_bindings_[id] = value;
+    } else if (mode == BindingMode::ReadOnly) {
+        ro_bindings_[id] = value;
+    }
 }
 
 void WidgetManager::SyncFromBindings() {
     for (size_t i = 0; i < widgets_.size(); i++) {
-        auto binding = bindings_.find(widgets_[i].id);
+        auto binding = rw_bindings_.find(widgets_[i].id);
 
-        if (binding == bindings_.end()) {
+        if (binding == rw_bindings_.end()) {
             continue;
         }
 
         auto& state = states_[i];
-        if (auto ptr = &binding->second) {
+        auto ptr = &binding->second;
+        if (ptr && *ptr) {
+            state = **ptr;
+        }
+    }
+    for (size_t i = 0; i < widgets_.size(); i++) {
+        auto binding = ro_bindings_.find(widgets_[i].id);
+
+        if (binding == ro_bindings_.end()) {
+            continue;
+        }
+
+        auto& state = states_[i];
+        auto ptr = &binding->second;
+        if (ptr && *ptr) {
             state = **ptr;
         }
     }
 }
 void WidgetManager::SyncToBindings() {
     for (size_t i = 0; i < widgets_.size(); i++) {
-        auto binding = bindings_.find(widgets_[i].id);
+        auto binding = rw_bindings_.find(widgets_[i].id);
 
-        if (binding == bindings_.end()) {
+        if (binding == rw_bindings_.end()) {
             continue;
         }
 
         auto& state = states_[i];
-        if (auto ptr = &binding->second) {
+        auto ptr = &binding->second;
+        if (ptr && *ptr) {
             **ptr = state;
         }
     }

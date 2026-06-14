@@ -10,15 +10,18 @@
 
 class UI;
 
+enum class BindingMode {
+    ReadOnly,
+    ReadWrite
+};
+
 class WidgetManager {
 public:
-    bool Load(std::filesystem::path const& path);
+    void Load(std::filesystem::path const& path);
 
     void Update();
-
     void Draw(UI& ui);
-
-    void Bind(std::string const& id, WidgetState* value);
+    void Bind(std::string const& id, WidgetState* value, BindingMode const mode = BindingMode::ReadWrite);
 
 private:
     void Reload();
@@ -33,5 +36,6 @@ private:
     std::filesystem::file_time_type file_time_;
     std::vector<WidgetDefinition> widgets_;
     std::vector<WidgetState> states_;
-    std::unordered_map<std::string, WidgetState*> bindings_;
+    std::unordered_map<std::string, WidgetState*> rw_bindings_;
+    std::unordered_map<std::string, WidgetState*> ro_bindings_;
 };

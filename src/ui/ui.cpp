@@ -150,21 +150,21 @@ HorizontalLayout UI::HorizontalLayoutPanel(Rect const& panel, s32 padding, s32 i
 WidgetState UI::Checkbox(Rect const& rect, bool value, std::string_view label) {
     auto state = Evaluate(rect);
 
-    if (state.released) {
-        value = !value;
-    }
-
     const int box_size = rect.h;
     Rect box{rect.x, rect.y, box_size, box_size};
     Rect label_r{rect.x + box_size + 15, rect.y, rect.w - box_size - 15, rect.h};
 
     Color fill = value ? state.held ? theme_.accent_secondary : theme_.accent : theme_.control_fill;
 
-    ctx.renderer.scene->DrawRectangleWithBorder(box.x, box.y, box.w, box.h, theme_.control_fill,
-                                                4, GetMainColorForState(state, theme_));
+    ctx.renderer.scene->DrawRectangleWithBorder(box.x, box.y, box.w, box.h, theme_.control_fill, 4,
+                                                GetMainColorForState(state, theme_));
 
     if (value) {
         ctx.renderer.scene->DrawRectangle(box.x + 8, box.y + 8, box.w - 16, box.h - 16, fill);
+    }
+
+    if (state.released) {
+        value = !value;
     }
 
     if (!label.empty()) {

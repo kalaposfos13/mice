@@ -5,7 +5,7 @@
 #define THIS_SCENE SceneDesignerScene
 
 static WidgetManager wm;
-static WidgetState checkbox_state{};
+static WidgetState checkbox_state{}, slider_state{}, button_state{}, progressbar_state{};
 
 void THIS_SCENE::Enter(AppContext& ctx) {
     LOG_INFO("enter");
@@ -13,8 +13,10 @@ void THIS_SCENE::Enter(AppContext& ctx) {
     ctx.mice.SetCursor(1, 1920 / 2, 1080 / 2 + 300);
 
     wm.Load(WORKDIR_ROOT / "panel.txt");
-    wm.Bind("chkb1", &checkbox_state);
-    wm.Bind("btn1", &checkbox_state);
+    wm.Bind("btn1", &button_state);
+    wm.Bind("chkb1", &checkbox_state, BindingMode::ReadOnly);
+    wm.Bind("sl1", &slider_state);
+    wm.Bind("prb1", &progressbar_state, BindingMode::ReadOnly);
 }
 
 void THIS_SCENE::Leave(AppContext& ctx) {}
@@ -30,6 +32,10 @@ void THIS_SCENE::Update(AppContext& ctx, double dt) {
         ctx.mice.SetCursor(1, 1920 / 2, 1080 / 2 + 300);
     }
     wm.Update();
+    if (button_state.released) {
+        checkbox_state.bool_value ^= 1;
+    }
+    progressbar_state.float_value = 1 - slider_state.float_value;
 }
 
 void THIS_SCENE::Draw(AppContext& ctx) {
