@@ -19,13 +19,13 @@ void WidgetManager::Reload() {
 
         return;
     }
-    for (size_t i = 0; i < widgets_.size(); i++) {
-        states_[i].bool_value = new_widgets[i].bool_value;
-        states_[i].float_value = new_widgets[i].value;
-    }
     widgets_ = std::move(new_widgets);
-
     states_.resize(widgets_.size());
+    for (size_t i = 0; i < widgets_.size(); i++) {
+        states_[i].bool_value = widgets_[i].bool_value;
+        states_[i].float_value = widgets_[i].value;
+    }
+
     file_time_ = std::filesystem::last_write_time(path_);
 }
 
