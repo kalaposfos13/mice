@@ -19,9 +19,9 @@ void WidgetManager::Reload() {
 
         return;
     }
-    std::unordered_map<std::string, WidgetState> old_state;
     for (size_t i = 0; i < widgets_.size(); i++) {
-        old_state.emplace(widgets_[i].id, states_[i]);
+        states_[i].bool_value = new_widgets[i].bool_value;
+        states_[i].float_value = new_widgets[i].value;
     }
     widgets_ = std::move(new_widgets);
 
