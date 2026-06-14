@@ -50,10 +50,12 @@ void Mice::Update() {
         if (mouse.delta.timestamp == 0) {
             mouse.clicked_buttons = {};
             mouse.released_buttons = {};
+            mouse.wheel = 0;
             continue; // no update came
         }
         mouse.stable = mouse.delta;
         mouse.delta = {};
+        mouse.wheel = mouse.stable.wheel;
         mouse.position.x += mouse.stable.dx;
         mouse.position.y += mouse.stable.dy;
         mouse.position.x += mouse.stable.dx;

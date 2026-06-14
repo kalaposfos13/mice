@@ -81,6 +81,7 @@ struct Mouse {
     MouseButtonsState released_buttons{};
 
     MousePosition position{};
+    s32 wheel{};
 
     std::array<OrbisMouseData, 64> data_buf{};
 };
