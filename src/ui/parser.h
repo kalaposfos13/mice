@@ -5,32 +5,8 @@
 #include <vector>
 
 #include <filesystem>
+#include "widget.h"
 #include "layout.h"
-
-enum class WidgetType {
-    Label,
-    Button,
-    Checkbox,
-    Slider,
-    ProgressBar,
-    Separator,
-    Panel,
-};
-
-struct WidgetDefinition {
-    WidgetType type;
-
-    Rect rect{};
-
-    std::string text;
-
-    bool bool_value{};
-
-    float value{};
-    float min{};
-    float max{};
-    float step{};
-};
 
 class PanelLoader {
 public:

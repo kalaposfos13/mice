@@ -93,16 +93,10 @@ struct WidgetState {
     bool released_m0{};
     bool released_m1{};
 
+    bool bool_value{};
+    float float_value{};
+
     explicit operator bool() const {
         return released;
     }
-};
-
-struct CheckboxState {
-    WidgetState interaction;
-    bool value{};
-};
-struct SliderState {
-    WidgetState interaction;
-    float value{};
 };

@@ -72,18 +72,18 @@ void THIS_SCENE::Draw(AppContext& ctx) {
 
     // Checkbox
     auto cb = ui.Checkbox(layout.Next(), checkbox_value, "Checkbox");
-    checkbox_value = cb.value;
+    checkbox_value = cb.bool_value;
 
-    ui.Label({650, 400}, cb.value ? "Checkbox: ON" : "Checkbox: OFF", FontSize::Small);
+    ui.Label({650, 400}, cb.bool_value ? "Checkbox: ON" : "Checkbox: OFF", FontSize::Small);
 
     // Slider
     auto sl = ui.Slider(layout.Next(), slider_value, 0.0f, 10.0f);
-    slider_value = sl.value;
+    slider_value = sl.float_value;
 
     ui.Label({650, 470}, "Slider: " + std::to_string((int)slider_value), FontSize::Small);
 
     auto sl_r = ui.Slider(layout.Next(), slider_r_value, 0.0f, 10.0f, 1);
-    slider_r_value = sl_r.value;
+    slider_r_value = sl_r.float_value;
 
     ui.Label({650, 540}, "Slider (ratcheted): " + std::to_string((int)slider_r_value),
              FontSize::Small);

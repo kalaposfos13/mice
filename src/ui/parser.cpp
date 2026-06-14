@@ -27,15 +27,11 @@ static bool ParseError(std::vector<WidgetDefinition>& widgets, size_t line,
     widgets.clear();
 
     WidgetDefinition w;
-
     w.type = WidgetType::Label;
-
     w.rect = {50, 50, 1500, 50};
-
     w.text = "Line " + std::to_string(line) + ": " + message;
 
     widgets.push_back(std::move(w));
-
     return false;
 }
 
@@ -72,6 +68,7 @@ bool PanelLoader::Load(std::filesystem::path const& path, std::vector<WidgetDefi
         if (cmd == "PANEL") {
             WidgetDefinition w;
             w.type = WidgetType::Panel;
+            ss >> w.id;
 
             Layout* layout = CurrentLayout();
             if (layout) {
@@ -86,6 +83,7 @@ bool PanelLoader::Load(std::filesystem::path const& path, std::vector<WidgetDefi
         if (cmd == "LABEL") {
             WidgetDefinition w;
             w.type = WidgetType::Label;
+            ss >> w.id;
 
             Layout* layout = CurrentLayout();
             if (layout) {
@@ -133,6 +131,7 @@ bool PanelLoader::Load(std::filesystem::path const& path, std::vector<WidgetDefi
         if (cmd == "BUTTON") {
             WidgetDefinition w;
             w.type = WidgetType::Button;
+            ss >> w.id;
 
             Layout* layout = CurrentLayout();
             if (layout) {
@@ -150,6 +149,7 @@ bool PanelLoader::Load(std::filesystem::path const& path, std::vector<WidgetDefi
         if (cmd == "CHECKBOX") {
             WidgetDefinition w;
             w.type = WidgetType::Checkbox;
+            ss >> w.id;
 
             int checked;
 
@@ -173,6 +173,7 @@ bool PanelLoader::Load(std::filesystem::path const& path, std::vector<WidgetDefi
         if (cmd == "SLIDER") {
             WidgetDefinition w;
             w.type = WidgetType::Slider;
+            ss >> w.id;
 
             Layout* layout = CurrentLayout();
             if (layout) {
@@ -189,6 +190,7 @@ bool PanelLoader::Load(std::filesystem::path const& path, std::vector<WidgetDefi
         if (cmd == "PROGRESSBAR") {
             WidgetDefinition w;
             w.type = WidgetType::ProgressBar;
+            ss >> w.id;
 
             Layout* layout = CurrentLayout();
             if (layout) {
@@ -205,6 +207,7 @@ bool PanelLoader::Load(std::filesystem::path const& path, std::vector<WidgetDefi
         if (cmd == "SEPARATOR") {
             WidgetDefinition w;
             w.type = WidgetType::Separator;
+            ss >> w.id;
 
             Layout* layout = CurrentLayout();
             if (layout) {

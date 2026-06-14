@@ -147,7 +147,7 @@ HorizontalLayout UI::HorizontalLayoutPanel(Rect const& panel, s32 padding, s32 i
                             spacing};
 }
 
-CheckboxState UI::Checkbox(Rect const& rect, bool value, std::string_view label) {
+WidgetState UI::Checkbox(Rect const& rect, bool value, std::string_view label) {
     auto state = Evaluate(rect);
 
     if (state.released) {
@@ -171,9 +171,11 @@ CheckboxState UI::Checkbox(Rect const& rect, bool value, std::string_view label)
         Label({label_r.x + 10, label_r.y + 4}, label);
     }
 
-    return {state, value};
+    state.bool_value = value;
+
+    return state;
 }
-SliderState UI::Slider(Rect const& rect, float value, float min, float max, float step) {
+WidgetState UI::Slider(Rect const& rect, float value, float min, float max, float step) {
     auto state = Evaluate(rect);
 
     Rect track = rect;
@@ -213,7 +215,9 @@ SliderState UI::Slider(Rect const& rect, float value, float min, float max, floa
 
     ctx.renderer.scene->DrawRectangle(knob_x - 10, rect.y - 5, 20, rect.h + 10, knob_c);
 
-    return {state, value};
+    state.float_value = value;
+
+    return state;
 }
 
 void UI::Separator(s32 x, s32 y, s32 width) {

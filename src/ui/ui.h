@@ -18,8 +18,8 @@ public:
     static void DrawCursors(AppContext&);
 
     WidgetState Button(Rect const& rect, std::string_view text, FontSize size = FontSize::Medium);
-    CheckboxState Checkbox(Rect const& rect, bool value, std::string_view label = {});
-    SliderState Slider(Rect const& rect, float value, float min, float max, float step = 0);
+    WidgetState Checkbox(Rect const& rect, bool value, std::string_view label = {});
+    WidgetState Slider(Rect const& rect, float value, float min, float max, float step = 0);
 
     void Label(Point pos, std::string_view text, FontSize size = FontSize::Medium);
     void ProgressBar(Rect const& rect, float value);
