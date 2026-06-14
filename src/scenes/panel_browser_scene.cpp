@@ -38,17 +38,16 @@ void PanelBrowserScene::Update(AppContext& ctx, double dt) {
         scroll++;
     }
 
-    scroll = std::clamp(scroll, (s64)0, std::max((s64)0, (s64)panels_.size()) - 12);
+    scroll = std::clamp(scroll, (s64)0, std::max((s64)12, (s64)panels_.size()) - 12);
 }
 
 void PanelBrowserScene::Draw(AppContext& ctx) {
     UI ui{ctx};
-    ui.Label({720, 80}, "Available Panels");
+    ui.Label({720, 80}, "Available Panels: " + std::to_string(panels_.size()));
     ui.Label({720, 180}, "scroll: " + std::to_string(scroll));
 
     VerticalLayout layout = ui.VerticalLayoutPanel({100, 50, 600, 870}, 10, 60, 10);
 
-    // for (auto const& panel : panels_) {
     for (auto i = scroll; i < std::min(scroll + 12, (s64)panels_.size()); i++) {
         auto const& panel = panels_[i];
         auto rect = layout.Next();
