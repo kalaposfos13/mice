@@ -137,12 +137,16 @@ void UI::Panel(Rect const& rect, Color fill, Color border) {
 
 VerticalLayout UI::VerticalLayoutPanel(Rect const& panel, s32 padding, s32 item_height,
                                        s32 spacing) {
+    Panel(panel);
+    padding += 10;
     return VerticalLayout{panel.x + padding, panel.y + padding, panel.w - padding * 2, item_height,
                           spacing};
 }
 
 HorizontalLayout UI::HorizontalLayoutPanel(Rect const& panel, s32 padding, s32 item_width,
                                            s32 spacing) {
+    Panel(panel);
+    padding += 10;
     return HorizontalLayout{panel.x + padding, panel.y + padding, item_width, panel.h - padding * 2,
                             spacing};
 }

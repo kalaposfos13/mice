@@ -14,9 +14,9 @@ void THIS_SCENE::Enter(AppContext& ctx) {
 
     wm.Load(WORKDIR_ROOT / "panel.txt");
     wm.Bind("btn1", &button_state);
-    wm.Bind("chkb1", &checkbox_state, BindingMode::ReadOnly);
+    wm.Bind("chkb1", &checkbox_state, BindingMode::ReadWrite);
     wm.Bind("sl1", &slider_state);
-    wm.Bind("prb1", &progressbar_state, BindingMode::ReadOnly);
+    wm.Bind("prb1", &progressbar_state, BindingMode::ReadWrite);
 }
 
 void THIS_SCENE::Leave(AppContext& ctx) {}

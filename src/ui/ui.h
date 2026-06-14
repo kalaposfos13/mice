@@ -1,7 +1,6 @@
 #pragma once
 
 #include "layout.h"
-#include "ui_types.h"
 
 class AppContext;
 

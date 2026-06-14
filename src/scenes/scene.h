@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ui/ui.h"
+#include "ui/widget_manager.h"
 
 class AppContext;
 
@@ -28,7 +29,7 @@ public:
         void Draw(AppContext& ctx) override;                                                       \
     };
 #define DECLARE_OVERLAY_SCENE(name)                                                                \
-    class name : public Scene {                                                                    \
+    class name final : public Scene {                                                              \
     public:                                                                                        \
         void Enter(AppContext& ctx) override;                                                      \
         void Leave(AppContext& ctx) override;                                                      \
@@ -47,3 +48,32 @@ DECLARE_SCENE(VideoSettingsScene)
 DECLARE_SCENE(AudioSettingsScene)
 DECLARE_OVERLAY_SCENE(AboutOverlayScene)
 DECLARE_SCENE(SceneDesignerScene)
+
+class PanelBrowserScene final : public Scene {
+    void Enter(AppContext& ctx) override;
+    void Leave(AppContext& ctx) override;
+    void Update(AppContext& ctx, double dt) override;
+    void Draw(AppContext& ctx) override;
+
+private:
+    struct PanelEntry {
+        std::filesystem::path path;
+        std::string display_name;
+    };
+    std::vector<PanelEntry> panels_;
+};
+
+class PanelViewerScene final : public Scene {
+public:
+    explicit PanelViewerScene(std::filesystem::path panel_path);
+
+    void Enter(AppContext& ctx) override;
+    void Leave(AppContext& ctx) override;
+    void Update(AppContext& ctx, double dt) override;
+    void Draw(AppContext& ctx) override;
+
+private:
+    std::filesystem::path panel_path_;
+
+    WidgetManager wm_;
+};

@@ -8,7 +8,7 @@ void App::Run() {
     ctx.mice.Recenter(0);
     ctx.mice.Recenter(1);
 
-    ctx.scenes.Push<MainMenuScene>();
+    ctx.scenes.Push<PanelBrowserScene>();
     ctx.scenes.Update(0.0f);
 
     ctx.running = true;
