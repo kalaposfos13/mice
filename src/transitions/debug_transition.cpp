@@ -3,7 +3,7 @@
 #include <algorithm>
 
 #include "app_context.h"
-#include "ui/ui.h"
+#include "display/ui/ui.h"
 
 float DebugTransition::Duration() const {
     return 0.5f;

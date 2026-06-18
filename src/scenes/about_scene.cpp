@@ -1,6 +1,5 @@
 #include "app_context.h"
 #include "scene.h"
-#include "ui/ui.h"
 
 #define THIS_SCENE AboutOverlayScene
 

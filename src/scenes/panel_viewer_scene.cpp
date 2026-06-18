@@ -1,7 +1,6 @@
 #include <filesystem>
 #include "app_context.h"
 #include "scene.h"
-#include "ui/widget_manager.h"
 
 PanelViewerScene::PanelViewerScene(std::filesystem::path panel_path)
     : panel_path_(std::move(panel_path)) {}

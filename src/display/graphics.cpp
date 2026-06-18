@@ -323,6 +323,7 @@ void Scene2D::DrawLine(int const p1x, int const p1y, int const dx, int const dy,
 
 void Scene2D::DrawText(char const* txt, FT_Face face, int startX, int startY, Color bgColor,
                        Color fgColor) {
+    return;
     int rc;
     int xOffset = 0;
     int yOffset = 0;

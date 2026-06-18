@@ -1,5 +1,5 @@
 #include "app.h"
-#include "ui/ui.h"
+#include "display/ui/ui.h"
 
 #include <map>
 #include <utility>

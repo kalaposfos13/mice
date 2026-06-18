@@ -1,6 +1,5 @@
 #include "app_context.h"
 #include "scene.h"
-#include "ui/widget_manager.h"
 
 #define THIS_SCENE SceneDesignerScene
 

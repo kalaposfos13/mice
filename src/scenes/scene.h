@@ -1,7 +1,7 @@
 #pragma once
 
-#include "ui/ui.h"
-#include "ui/widget_manager.h"
+#include "display/ui/ui.h"
+#include "display/ui/widget_manager.h"
 
 class AppContext;
 
