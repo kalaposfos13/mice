@@ -49,7 +49,7 @@ WidgetState UI::Evaluate(Rect const& rect) {
     s.hovered_m0 = rect.Contains(ctx.mice[0].position);
     s.hovered_m1 = rect.Contains(ctx.mice[1].position);
 
-    bool accept = ctx.accepting_inputs;
+    bool accept = ctx.state.accepting_inputs;
 
     s.held_m0 = accept && s.hovered_m0 && ctx.mice[0].current_buttons.Includes(MouseButton::Right);
 

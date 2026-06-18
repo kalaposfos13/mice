@@ -12,22 +12,26 @@
 
 extern std::filesystem::path APP_ROOT, WORKDIR_ROOT;
 
-struct Settings {};
+struct AppSettings {};
 
-class AppContext {
-public:
-    s32 user_id{};
+struct AppState {
     bool running = false;
     bool draw_mice = true;
     bool accepting_inputs = true;
+};
+
+class AppContext {
+public:
     SceneManager scenes{};
 
     Renderer renderer{};
 
+    s32 user_id{};
     Pad pad{};
     Mice mice{};
 
-    Settings settings{};
+    AppSettings settings{};
+    AppState state;
 
     AppContext();
 };

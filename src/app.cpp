@@ -11,10 +11,10 @@ void App::Run() {
     ctx.scenes.Push<SceneDesignerScene>();
     ctx.scenes.Update(0.0f);
 
-    ctx.running = true;
+    ctx.state.running = true;
     auto dt_prev = std::chrono::system_clock::now();
 
-    while (ctx.running) {
+    while (ctx.state.running) {
         ctx.pad.Update();
         ctx.mice.Update();
 

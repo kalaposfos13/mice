@@ -9,6 +9,6 @@ AppContext::AppContext() {
     sceUserServiceInitialize(&param);
     sceUserServiceGetInitialUser(&user_id);
     LOG_INFO("userid: {:x}", (u32)user_id);
-    pad.Init(ctx.user_id);
-    mice.Init(ctx.user_id);
+    pad.Init(user_id);
+    mice.Init(user_id);
 }

@@ -45,7 +45,7 @@ void SceneManager::Draw() {
     if (transition_phase == TransitionPhase::None) {
         DrawCurrentScenes();
 
-        if (ctx.draw_mice) {
+        if (ctx.state.draw_mice) {
             UI::DrawCursors();
         }
 
@@ -62,7 +62,7 @@ void SceneManager::Draw() {
         active_transition->DrawIn(new_capture, t);
     }
 
-    if (ctx.draw_mice) {
+    if (ctx.state.draw_mice) {
         UI::DrawCursors();
     }
 }
@@ -78,14 +78,14 @@ void SceneManager::DrawCurrentScenes() {
         --first_visible;
     }
 
-    bool old_accepting = ctx.accepting_inputs;
-    ctx.accepting_inputs = false;
+    bool old_accepting = ctx.state.accepting_inputs;
+    ctx.state.accepting_inputs = false;
 
     for (size_t i = first_visible; i < stack.size() - 1; i++) {
         stack[i]->Draw();
     }
 
-    ctx.accepting_inputs = old_accepting;
+    ctx.state.accepting_inputs = old_accepting;
     stack.back()->Draw();
 }
 
@@ -120,7 +120,7 @@ void SceneManager::ExecuteCommand(Command& cmd) {
         }
 
         if (stack.empty()) {
-            ctx.running = false;
+            ctx.state.running = false;
         }
 
         break;
@@ -169,8 +169,8 @@ bool SceneManager::RequiresTransition(Command const& cmd) {
 
 void SceneManager::BeginTransition(Command cmd) {
     LOG_INFO("called");
-    accepting_before_transition = ctx.accepting_inputs;
-    ctx.accepting_inputs = false;
+    accepting_before_transition = ctx.state.accepting_inputs;
+    ctx.state.accepting_inputs = false;
     transition_command = std::move(cmd);
 
     active_transition = std::make_unique<FadeTransition>();
@@ -202,7 +202,7 @@ void SceneManager::UpdateTransition(double dt) {
 
             active_transition.reset();
             transition_command.reset();
-            ctx.accepting_inputs = accepting_before_transition;
+            ctx.state.accepting_inputs = accepting_before_transition;
         }
     }
 }
