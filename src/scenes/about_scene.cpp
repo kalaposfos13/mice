@@ -4,19 +4,19 @@
 
 #define THIS_SCENE AboutOverlayScene
 
-void THIS_SCENE::Enter(AppContext&) {}
+void THIS_SCENE::Enter() {}
 
-void THIS_SCENE::Leave(AppContext&) {}
+void THIS_SCENE::Leave() {}
 
-void THIS_SCENE::Update(AppContext& ctx, double dt) {
+void THIS_SCENE::Update(double dt) {
     if (ctx.pad.IsPressed(OrbisPadButton::ORBIS_PAD_BUTTON_CIRCLE)) {
         ctx.scenes.Pop();
     }
 }
 
-void THIS_SCENE::Draw(AppContext& ctx) {
+void THIS_SCENE::Draw() {
 
-    UI ui{ctx};
+    UI ui{};
 
     ctx.renderer.scene->DrawRectangle(1120, 300, 550, 350, Colors::blue);
 

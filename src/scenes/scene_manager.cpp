@@ -1,9 +1,8 @@
 #include "scene_manager.h"
 
 #include "app_context.h"
-#include "scene.h"
 
-SceneManager::SceneManager(AppContext& ctx) : ctx(ctx) {}
+SceneManager::SceneManager() {}
 
 void SceneManager::Push(std::unique_ptr<Scene> scene) {
     pending.push_back({
@@ -36,7 +35,7 @@ void SceneManager::Update(double dt) {
     }
 
     if (auto* scene = Current()) {
-        scene->Update(ctx, dt);
+        scene->Update(dt);
     }
 
     ApplyCommands();
@@ -47,7 +46,7 @@ void SceneManager::Draw() {
         DrawCurrentScenes();
 
         if (ctx.draw_mice) {
-            UI::DrawCursors(ctx);
+            UI::DrawCursors();
         }
 
         return;
@@ -58,13 +57,13 @@ void SceneManager::Draw() {
     t = std::clamp(t, 0.0f, 1.0f);
 
     if (transition_phase == TransitionPhase::Out) {
-        active_transition->DrawOut(ctx, old_capture, t);
+        active_transition->DrawOut(old_capture, t);
     } else {
-        active_transition->DrawIn(ctx, new_capture, t);
+        active_transition->DrawIn(new_capture, t);
     }
 
     if (ctx.draw_mice) {
-        UI::DrawCursors(ctx);
+        UI::DrawCursors();
     }
 }
 
@@ -83,11 +82,11 @@ void SceneManager::DrawCurrentScenes() {
     ctx.accepting_inputs = false;
 
     for (size_t i = first_visible; i < stack.size() - 1; i++) {
-        stack[i]->Draw(ctx);
+        stack[i]->Draw();
     }
 
     ctx.accepting_inputs = old_accepting;
-    stack.back()->Draw(ctx);
+    stack.back()->Draw();
 }
 
 void SceneManager::ApplyCommands() {
@@ -108,7 +107,7 @@ void SceneManager::ExecuteCommand(Command& cmd) {
     switch (cmd.type) {
     case CommandType::Push: {
         if (cmd.scene) {
-            cmd.scene->Enter(ctx);
+            cmd.scene->Enter();
             stack.push_back(std::move(cmd.scene));
         }
         break;
@@ -116,7 +115,7 @@ void SceneManager::ExecuteCommand(Command& cmd) {
 
     case CommandType::Pop: {
         if (!stack.empty()) {
-            stack.back()->Leave(ctx);
+            stack.back()->Leave();
             stack.pop_back();
         }
 
@@ -129,12 +128,12 @@ void SceneManager::ExecuteCommand(Command& cmd) {
 
     case CommandType::Replace: {
         if (!stack.empty()) {
-            stack.back()->Leave(ctx);
+            stack.back()->Leave();
             stack.pop_back();
         }
 
         if (cmd.scene) {
-            cmd.scene->Enter(ctx);
+            cmd.scene->Enter();
             stack.push_back(std::move(cmd.scene));
         }
 

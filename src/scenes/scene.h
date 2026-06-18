@@ -9,11 +9,11 @@ class Scene {
 public:
     virtual ~Scene() = default;
 
-    virtual void Enter(AppContext& ctx) {}
-    virtual void Leave(AppContext& ctx) {}
+    virtual void Enter() {}
+    virtual void Leave() {}
 
-    virtual void Update(AppContext& ctx, double dt) = 0;
-    virtual void Draw(AppContext& ctx) = 0;
+    virtual void Update(double dt) = 0;
+    virtual void Draw() = 0;
 
     virtual bool IsOverlay() const {
         return false;
@@ -23,18 +23,18 @@ public:
 #define DECLARE_SCENE(name)                                                                        \
     class name : public Scene {                                                                    \
     public:                                                                                        \
-        void Enter(AppContext& ctx) override;                                                      \
-        void Leave(AppContext& ctx) override;                                                      \
-        void Update(AppContext& ctx, double dt) override;                                          \
-        void Draw(AppContext& ctx) override;                                                       \
+        void Enter() override;                                                      \
+        void Leave() override;                                                      \
+        void Update(double dt) override;                                          \
+        void Draw() override;                                                       \
     };
 #define DECLARE_OVERLAY_SCENE(name)                                                                \
     class name final : public Scene {                                                              \
     public:                                                                                        \
-        void Enter(AppContext& ctx) override;                                                      \
-        void Leave(AppContext& ctx) override;                                                      \
-        void Update(AppContext& ctx, double dt) override;                                          \
-        void Draw(AppContext& ctx) override;                                                       \
+        void Enter() override;                                                      \
+        void Leave() override;                                                      \
+        void Update(double dt) override;                                          \
+        void Draw() override;                                                       \
         bool IsOverlay() const override {                                                          \
             return true;                                                                           \
         }                                                                                          \
@@ -50,10 +50,10 @@ DECLARE_OVERLAY_SCENE(AboutOverlayScene)
 DECLARE_SCENE(SceneDesignerScene)
 
 class PanelBrowserScene final : public Scene {
-    void Enter(AppContext& ctx) override;
-    void Leave(AppContext& ctx) override;
-    void Update(AppContext& ctx, double dt) override;
-    void Draw(AppContext& ctx) override;
+    void Enter() override;
+    void Leave() override;
+    void Update(double dt) override;
+    void Draw() override;
 
 private:
     struct PanelEntry {
@@ -67,10 +67,10 @@ class PanelViewerScene final : public Scene {
 public:
     explicit PanelViewerScene(std::filesystem::path panel_path);
 
-    void Enter(AppContext& ctx) override;
-    void Leave(AppContext& ctx) override;
-    void Update(AppContext& ctx, double dt) override;
-    void Draw(AppContext& ctx) override;
+    void Enter() override;
+    void Leave() override;
+    void Update(double dt) override;
+    void Draw() override;
 
 private:
     std::filesystem::path panel_path_;

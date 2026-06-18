@@ -6,7 +6,6 @@
 
 #include <orbis/Sysmodule.h>
 #include <orbis/SystemService.h>
-#include <orbis/UserService.h>
 #include <orbis/libkernel.h>
 
 #include <cstdlib>
@@ -23,6 +22,4 @@ public:
     void Run();
 
     bool use_font = false;
-
-    AppContext ctx{};
 };

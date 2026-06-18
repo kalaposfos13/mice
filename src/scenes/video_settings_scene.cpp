@@ -5,25 +5,25 @@
 
 static bool first_draw = false;
 
-void THIS_SCENE::Enter(AppContext&) {
+void THIS_SCENE::Enter() {
     first_draw = true;
     LOG_INFO("called");
 }
 
-void THIS_SCENE::Leave(AppContext&) {}
+void THIS_SCENE::Leave() {}
 
-void THIS_SCENE::Update(AppContext& ctx, double dt) {
+void THIS_SCENE::Update(double dt) {
     if (ctx.pad.IsPressed(OrbisPadButton::ORBIS_PAD_BUTTON_CIRCLE)) {
         ctx.scenes.Pop();
     }
 }
 
-void THIS_SCENE::Draw(AppContext& ctx) {
+void THIS_SCENE::Draw() {
     if (first_draw) {
         LOG_INFO("called");
         first_draw = false;
     }
-    UI ui{ctx};
+    UI ui{};
 
     ui.Label({650, 200}, "VIDEO SETTINGS", FontSize::Large);
 

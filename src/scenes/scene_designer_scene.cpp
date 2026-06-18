@@ -7,7 +7,7 @@
 static WidgetManager wm;
 static WidgetState checkbox_state{}, slider_state{}, button_state{}, progressbar_state{};
 
-void THIS_SCENE::Enter(AppContext& ctx) {
+void THIS_SCENE::Enter() {
     LOG_INFO("enter");
     ctx.mice.SetCursor(0, 1920 / 2, 1080 / 2 + 300);
     ctx.mice.SetCursor(1, 1920 / 2, 1080 / 2 + 300);
@@ -19,9 +19,9 @@ void THIS_SCENE::Enter(AppContext& ctx) {
     wm.Bind("prb1", &progressbar_state, BindingMode::ReadWrite);
 }
 
-void THIS_SCENE::Leave(AppContext& ctx) {}
+void THIS_SCENE::Leave() {}
 
-void THIS_SCENE::Update(AppContext& ctx, double dt) {
+void THIS_SCENE::Update(double dt) {
     if (ctx.pad.IsPressed(OrbisPadButton::ORBIS_PAD_BUTTON_CIRCLE)) {
         ctx.scenes.Pop();
     }
@@ -38,7 +38,7 @@ void THIS_SCENE::Update(AppContext& ctx, double dt) {
     progressbar_state.float_value = 1 - slider_state.float_value;
 }
 
-void THIS_SCENE::Draw(AppContext& ctx) {
-    UI ui{ctx};
+void THIS_SCENE::Draw() {
+    UI ui{};
     wm.Draw(ui);
 }

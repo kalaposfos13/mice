@@ -30,14 +30,7 @@ void App::Run() {
 }
 
 App::App() {
-    OrbisUserServiceInitializeParams param;
-    param.priority = ORBIS_KERNEL_PRIO_FIFO_LOWEST;
-    sceUserServiceInitialize(&param);
-    sceUserServiceGetInitialUser(&ctx.user_id);
-    LOG_INFO("userid: {:x}", (u32)ctx.user_id);
-    ctx.pad.Init(ctx.user_id);
-    ctx.mice.Init(ctx.user_id);
-    UI::InitFonts(ctx);
+    UI::InitFonts();
 }
 
 App::~App() {

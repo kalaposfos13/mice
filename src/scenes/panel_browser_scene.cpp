@@ -5,7 +5,7 @@ static s64 scroll = 0;
 static std::filesystem::path panel_dir;
 static std::filesystem::file_time_type folder_time{};
 
-void PanelBrowserScene::Enter(AppContext& ctx) {
+void PanelBrowserScene::Enter() {
     panel_dir = WORKDIR_ROOT / "panels";
     if (!std::filesystem::exists(panel_dir)) {
         std::filesystem::create_directories(panel_dir);
@@ -27,9 +27,9 @@ void PanelBrowserScene::Enter(AppContext& ctx) {
     });
 }
 
-void PanelBrowserScene::Leave(AppContext& ctx) {}
+void PanelBrowserScene::Leave() {}
 
-void PanelBrowserScene::Update(AppContext& ctx, double dt) {
+void PanelBrowserScene::Update(double dt) {
     if (ctx.pad.IsPressed(OrbisPadButton::ORBIS_PAD_BUTTON_CIRCLE)) {
         ctx.scenes.Pop();
         return;
@@ -45,13 +45,13 @@ void PanelBrowserScene::Update(AppContext& ctx, double dt) {
     auto current = std::filesystem::last_write_time(panel_dir);
     if (current != folder_time) {
         folder_time = current;
-        Leave(ctx);
-        Enter(ctx);
+        Leave();
+        Enter();
     }
 }
 
-void PanelBrowserScene::Draw(AppContext& ctx) {
-    UI ui{ctx};
+void PanelBrowserScene::Draw() {
+    UI ui{};
     ui.Label({720, 80}, "Available Panels: " + std::to_string(panels_.size()));
     ui.Label({720, 180}, "scroll: " + std::to_string(scroll));
 

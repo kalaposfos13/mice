@@ -2,10 +2,10 @@
 #include "common/logging.h"
 #include "ui.h"
 
-UI::UI(AppContext& _ctx) : ctx(_ctx) {}
+UI::UI() {}
 
 FT_Face UI::fonts[3]{};
-void UI::InitFonts(AppContext& ctx) {
+void UI::InitFonts() {
     std::string font_path = APP_ROOT / "assets/fonts/Monocraft.ttf";
     for (int i = 0; i < 3; i++) {
         if (ctx.renderer.scene->InitFont(&fonts[i], font_path.c_str(),
@@ -116,7 +116,7 @@ void UI::Label(Point pos, std::string_view const text, FontSize const size) {
                                  theme_.text);
 }
 
-void UI::DrawCursors(AppContext& ctx) {
+void UI::DrawCursors() {
     MousePosition const& mps0 = ctx.mice[0].position;
     MousePosition const& mps1 = ctx.mice[1].position;
     bool m0_pressed = ctx.mice[0].current_buttons.Includes(MouseButton::Right);

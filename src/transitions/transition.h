@@ -7,16 +7,16 @@ class AppContext;
 class Transition {
 public:
     virtual ~Transition() = default;
-    virtual void DrawOut(AppContext& ctx, Image const& image, float t) = 0;
-    virtual void DrawIn(AppContext& ctx, Image const& image, float t) = 0;
+    virtual void DrawOut(Image const& image, float t) = 0;
+    virtual void DrawIn(Image const& image, float t) = 0;
     virtual float Duration() const = 0;
 };
 
 #define DECLARE_TRANSITION(name)                                                                   \
     class name : public Transition {                                                               \
     public:                                                                                        \
-        void DrawOut(AppContext& ctx, Image const& image, float t);                                \
-        void DrawIn(AppContext& ctx, Image const& image, float t);                                 \
+        void DrawOut(Image const& image, float t);                                \
+        void DrawIn(Image const& image, float t);                                 \
         float Duration() const;                                                                    \
     };
 

@@ -4,9 +4,9 @@
 #include <optional>
 #include <vector>
 #include "transitions/transition.h"
+#include "scene.h"
 
 class AppContext;
-class Scene;
 
 class SceneManager {
 public:
@@ -26,7 +26,7 @@ public:
         std::unique_ptr<Scene> scene;
     };
 
-    explicit SceneManager(AppContext& ctx);
+    explicit SceneManager();
 
     void Push(std::unique_ptr<Scene> scene);
     void Pop();
@@ -55,7 +55,6 @@ private:
     void BeginTransition(Command cmd);
     void UpdateTransition(double dt);
     void CaptureCurrentScene();
-    AppContext& ctx;
 
     std::vector<std::unique_ptr<Scene>> stack;
     std::vector<Command> pending;

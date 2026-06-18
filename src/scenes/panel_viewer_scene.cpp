@@ -6,13 +6,13 @@
 PanelViewerScene::PanelViewerScene(std::filesystem::path panel_path)
     : panel_path_(std::move(panel_path)) {}
 
-void PanelViewerScene::Enter(AppContext&) {
+void PanelViewerScene::Enter() {
     wm_.Load(panel_path_);
 }
 
-void PanelViewerScene::Leave(AppContext&) {}
+void PanelViewerScene::Leave() {}
 
-void PanelViewerScene::Update(AppContext& ctx, double) {
+void PanelViewerScene::Update(double) {
     if (ctx.pad.IsPressed(OrbisPadButton::ORBIS_PAD_BUTTON_CIRCLE)) {
         ctx.scenes.Pop();
         return;
@@ -21,8 +21,8 @@ void PanelViewerScene::Update(AppContext& ctx, double) {
     wm_.Update();
 }
 
-void PanelViewerScene::Draw(AppContext& ctx) {
-    UI ui{ctx};
+void PanelViewerScene::Draw() {
+    UI ui{};
 
     wm_.Draw(ui);
 }

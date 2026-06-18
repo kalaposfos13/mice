@@ -7,16 +7,16 @@ static double deltatime = 0.5;
 static std::invoke_result_t<decltype(std::chrono::steady_clock::now)> steady_time{};
 static double steady_dt = 0;
 
-void THIS_SCENE::Enter(AppContext& ctx) {
+void THIS_SCENE::Enter() {
     LOG_INFO("enter");
     steady_time = std::chrono::steady_clock::now();
     ctx.mice.SetCursor(0, 1920 / 2, 1080 / 2 + 300);
     ctx.mice.SetCursor(1, 1920 / 2, 1080 / 2 + 300);
 }
 
-void THIS_SCENE::Leave(AppContext& ctx) {}
+void THIS_SCENE::Leave() {}
 
-void THIS_SCENE::Update(AppContext& ctx, double dt) {
+void THIS_SCENE::Update(double dt) {
     deltatime = dt;
     auto steady_now = std::chrono::steady_clock::now();
     steady_dt = std::chrono::duration<double>(steady_now - steady_time).count();
@@ -33,8 +33,8 @@ void THIS_SCENE::Update(AppContext& ctx, double dt) {
     }
 }
 
-void THIS_SCENE::Draw(AppContext& ctx) {
-    UI ui{ctx};
+void THIS_SCENE::Draw() {
+    UI ui{};
 
     static bool checkbox_value = false;
     static float slider_value = 5.0f, slider_r_value = 5.0f;

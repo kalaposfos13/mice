@@ -3,18 +3,18 @@
 
 #define THIS_SCENE SettingsScene
 
-void THIS_SCENE::Enter(AppContext&) {}
+void THIS_SCENE::Enter() {}
 
-void THIS_SCENE::Leave(AppContext&) {}
+void THIS_SCENE::Leave() {}
 
-void THIS_SCENE::Update(AppContext& ctx, double dt) {
+void THIS_SCENE::Update(double dt) {
     if (ctx.pad.IsPressed(OrbisPadButton::ORBIS_PAD_BUTTON_CIRCLE)) {
         ctx.scenes.Pop();
     }
 }
 
-void THIS_SCENE::Draw(AppContext& ctx) {
-    UI ui{ctx};
+void THIS_SCENE::Draw() {
+    UI ui{};
 
     ui.Panel({600, 100, 700, 700});
     ui.Label({700, 150}, "SETTINGS", FontSize::Large);

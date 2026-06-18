@@ -20,7 +20,7 @@ public:
     bool running = false;
     bool draw_mice = true;
     bool accepting_inputs = true;
-    SceneManager scenes{*this};
+    SceneManager scenes{};
 
     Renderer renderer{};
 
@@ -28,4 +28,8 @@ public:
     Mice mice{};
 
     Settings settings{};
+
+    AppContext();
 };
+
+extern AppContext ctx;

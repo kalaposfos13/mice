@@ -6,15 +6,15 @@ class AppContext;
 
 class UI {
 public:
-    explicit UI(AppContext&);
+    explicit UI();
 
     static UITheme default_theme;
     UITheme const& theme() const {
         return theme_;
     }
 
-    static void InitFonts(AppContext&);
-    static void DrawCursors(AppContext&);
+    static void InitFonts();
+    static void DrawCursors();
 
     WidgetState Button(Rect const& rect, std::string_view text, FontSize size = FontSize::Medium);
     WidgetState Checkbox(Rect const& rect, bool value, std::string_view label = {});
@@ -36,7 +36,6 @@ private:
 
     static s32 GetFontActualSize(FontSize);
 
-    AppContext& ctx;
     UITheme const& theme_ = default_theme;
 
     static FT_Face fonts[3];
