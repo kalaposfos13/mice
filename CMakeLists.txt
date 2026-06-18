@@ -64,6 +64,7 @@ add_executable(eboot.elf ${SOURCES})
 
 target_include_directories(eboot.elf PRIVATE
     ${ROOT}/src
+    ${ROOT}/src/common
     ${OO_PS4_TOOLCHAIN}/include
     ${OO_PS4_TOOLCHAIN}/include/c++/v1
 )
