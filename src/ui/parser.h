@@ -5,14 +5,12 @@
 #include <vector>
 
 #include <filesystem>
-#include "widget.h"
 #include "layout.h"
+#include "widget.h"
 
 class PanelLoader {
 public:
-    bool Load(
-        std::filesystem::path const& path,
-        std::vector<WidgetDefinition>& widgets);
+    bool Load(std::filesystem::path const& path, std::vector<WidgetDefinition>& widgets);
 
 private:
     Layout* CurrentLayout();

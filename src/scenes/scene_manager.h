@@ -3,8 +3,8 @@
 #include <memory>
 #include <optional>
 #include <vector>
-#include "transitions/transition.h"
 #include "scene.h"
+#include "transitions/transition.h"
 
 class AppContext;
 

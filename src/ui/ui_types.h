@@ -1,8 +1,8 @@
 #pragma once
 
 #include "common/types.h"
-#include "input/mouse.h"
 #include "display/graphics.h"
+#include "input/mouse.h"
 
 namespace Colors {
 static constexpr Color red{255, 0, 0};

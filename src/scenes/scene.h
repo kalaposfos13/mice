@@ -23,18 +23,18 @@ public:
 #define DECLARE_SCENE(name)                                                                        \
     class name : public Scene {                                                                    \
     public:                                                                                        \
-        void Enter() override;                                                      \
-        void Leave() override;                                                      \
-        void Update(double dt) override;                                          \
-        void Draw() override;                                                       \
+        void Enter() override;                                                                     \
+        void Leave() override;                                                                     \
+        void Update(double dt) override;                                                           \
+        void Draw() override;                                                                      \
     };
 #define DECLARE_OVERLAY_SCENE(name)                                                                \
     class name final : public Scene {                                                              \
     public:                                                                                        \
-        void Enter() override;                                                      \
-        void Leave() override;                                                      \
-        void Update(double dt) override;                                          \
-        void Draw() override;                                                       \
+        void Enter() override;                                                                     \
+        void Leave() override;                                                                     \
+        void Update(double dt) override;                                                           \
+        void Draw() override;                                                                      \
         bool IsOverlay() const override {                                                          \
             return true;                                                                           \
         }                                                                                          \

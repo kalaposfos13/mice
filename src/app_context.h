@@ -2,13 +2,13 @@
 
 #include "common/assert.h"
 #include "common/logging.h"
+#include "display/renderer.h"
 #include "input/mouse.h"
 #include "input/pad.h"
-#include "display/renderer.h"
 #include "scenes/scene_manager.h"
 
-#include <memory>
 #include <filesystem>
+#include <memory>
 
 extern std::filesystem::path APP_ROOT, WORKDIR_ROOT;
 

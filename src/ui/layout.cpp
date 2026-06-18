@@ -1,12 +1,7 @@
 #include "layout.h"
 
 Rect VerticalLayout::Next() {
-    Rect r{
-        x,
-        y,
-        width,
-        height
-    };
+    Rect r{x, y, width, height};
 
     y += height + spacing;
 
@@ -14,12 +9,7 @@ Rect VerticalLayout::Next() {
 }
 
 Rect HorizontalLayout::Next() {
-    Rect r{
-        x,
-        y,
-        width,
-        height
-    };
+    Rect r{x, y, width, height};
 
     x += width + spacing;
 

@@ -15,8 +15,8 @@ public:
 #define DECLARE_TRANSITION(name)                                                                   \
     class name : public Transition {                                                               \
     public:                                                                                        \
-        void DrawOut(Image const& image, float t);                                \
-        void DrawIn(Image const& image, float t);                                 \
+        void DrawOut(Image const& image, float t);                                                 \
+        void DrawIn(Image const& image, float t);                                                  \
         float Duration() const;                                                                    \
     };
 

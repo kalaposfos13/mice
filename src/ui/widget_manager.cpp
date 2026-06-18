@@ -1,6 +1,6 @@
+#include "common/logging.h"
 #include "ui.h"
 #include "widget_manager.h"
-#include "common/logging.h"
 
 void WidgetManager::Load(std::filesystem::path const& path) {
     path_ = path;
@@ -103,7 +103,7 @@ void WidgetManager::DrawWidget(UI& ui, WidgetDefinition& def, WidgetState& state
         break;
     }
     case WidgetType::Slider: {
-        state =  ui.Slider(def.rect, state.float_value, def.min, def.max, def.step);
+        state = ui.Slider(def.rect, state.float_value, def.min, def.max, def.step);
         break;
     }
     case WidgetType::ProgressBar:

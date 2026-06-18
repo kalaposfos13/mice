@@ -10,10 +10,7 @@
 
 class UI;
 
-enum class BindingMode {
-    ReadOnly,
-    ReadWrite
-};
+enum class BindingMode { ReadOnly, ReadWrite };
 
 class WidgetManager {
 public:
@@ -21,7 +18,8 @@ public:
 
     void Update();
     void Draw(UI& ui);
-    void Bind(std::string const& id, WidgetState* value, BindingMode const mode = BindingMode::ReadWrite);
+    void Bind(std::string const& id, WidgetState* value,
+              BindingMode const mode = BindingMode::ReadWrite);
 
 private:
     void Reload();
