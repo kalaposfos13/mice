@@ -7,8 +7,8 @@ void Mice::Init(OrbisUserServiceUserId const& uid) {
     sceSysmoduleLoadModule(ORBIS_SYSMODULE_MOUSE);
     sceMouseInit();
     OrbisMouseOpenParam p{.flag = MouseOpenBehaviour::Normal};
-    mice[0].handle = sceMouseOpen(uid, 0, 0, &p);
-    mice[1].handle = sceMouseOpen(uid, 0, 1, &p);
+    ASSERT_NO_ERROR(mice[0].handle = sceMouseOpen(uid, 0, 0, &p));
+    ASSERT_NO_ERROR(mice[1].handle = sceMouseOpen(uid, 0, 1, &p));
     LOG_INFO("m0 handle: {}, m1 handle: {}", mice[0].handle, mice[1].handle);
     std::thread reader{[this]() {
         while (true) {

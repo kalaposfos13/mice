@@ -71,7 +71,7 @@ struct MousePosition {
 };
 
 struct Mouse {
-    s32 handle{};
+    s32 handle = -1;
 
     MouseFrameState delta{};
     MouseFrameState stable{};
