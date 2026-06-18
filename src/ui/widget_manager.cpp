@@ -38,54 +38,22 @@ void WidgetManager::Update() {
 }
 
 void WidgetManager::Bind(std::string const& id, WidgetState* value, BindingMode const mode) {
-    if (mode == BindingMode::ReadWrite) {
-        rw_bindings_[id] = value;
-    } else if (mode == BindingMode::ReadOnly) {
-        ro_bindings_[id] = value;
+    auto const it = std::find_if(widgets_.begin(), widgets_.end(),
+                                 [&id](WidgetDefinition w) { return w.id == id; });
+    if (it == widgets_.end()) {
+        return;
     }
+    bindings_.emplace_back(value, &states_[std::distance(widgets_.begin(), it)], mode);
 }
 
 void WidgetManager::SyncFromBindings() {
-    for (size_t i = 0; i < widgets_.size(); i++) {
-        auto binding = rw_bindings_.find(widgets_[i].id);
-
-        if (binding == rw_bindings_.end()) {
-            continue;
-        }
-
-        auto& state = states_[i];
-        auto ptr = &binding->second;
-        if (ptr && *ptr) {
-            state = **ptr;
-        }
-    }
-    for (size_t i = 0; i < widgets_.size(); i++) {
-        auto binding = ro_bindings_.find(widgets_[i].id);
-
-        if (binding == ro_bindings_.end()) {
-            continue;
-        }
-
-        auto& state = states_[i];
-        auto ptr = &binding->second;
-        if (ptr && *ptr) {
-            state = **ptr;
-        }
+    for (auto& b : bindings_) {
+        b.ToWidget();
     }
 }
 void WidgetManager::SyncToBindings() {
-    for (size_t i = 0; i < widgets_.size(); i++) {
-        auto binding = rw_bindings_.find(widgets_[i].id);
-
-        if (binding == rw_bindings_.end()) {
-            continue;
-        }
-
-        auto& state = states_[i];
-        auto ptr = &binding->second;
-        if (ptr && *ptr) {
-            **ptr = state;
-        }
+    for (auto& b : bindings_) {
+        b.ToExternal();
     }
 }
 

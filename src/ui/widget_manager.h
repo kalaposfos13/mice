@@ -10,7 +10,24 @@
 
 class UI;
 
-enum class BindingMode { ReadOnly, ReadWrite };
+enum class BindingMode { ReadOnly, ReadWrite, WriteOnly };
+class DataBinding {
+public:
+    WidgetState* external;
+    WidgetState* widget;
+    BindingMode mode;
+
+    void ToWidget() {
+        if (mode != BindingMode::WriteOnly) {
+            *widget = *external;
+        }
+    }
+    void ToExternal() {
+        if (mode != BindingMode::ReadOnly) {
+            *external = *widget;
+        }
+    }
+};
 
 class WidgetManager {
 public:
@@ -34,6 +51,5 @@ private:
     std::filesystem::file_time_type file_time_;
     std::vector<WidgetDefinition> widgets_;
     std::vector<WidgetState> states_;
-    std::unordered_map<std::string, WidgetState*> rw_bindings_;
-    std::unordered_map<std::string, WidgetState*> ro_bindings_;
+    std::vector<DataBinding> bindings_;
 };
