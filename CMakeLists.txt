@@ -53,6 +53,7 @@ file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
 )
 
 file(GLOB_RECURSE ASSETS CONFIGURE_DEPENDS
+    ${ROOT}/.is-app0-root
     ${ROOT}/assets/*
 )
 
