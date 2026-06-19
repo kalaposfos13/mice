@@ -123,12 +123,14 @@ void UI::DrawCursors() {
     bool m1_pressed = ctx.mice[1].current_buttons.Includes(MouseButton::Left);
 
     auto sc = ctx.renderer.scene;
-    sc->DrawRectangle(mps0.x - 25, mps0.y, 25, 25,
+    sc->DrawRectangle(std::max(mps0.x - 25, 0), std::min(mps0.y, 1080 - 25), 25, 25,
                       m0_pressed ? Colors::bright_orange : Colors::orange);
-    sc->DrawRectangle(mps0.x - 5, mps0.y, 5, 5, Colors::white);
+    sc->DrawRectangle(std::max(mps0.x - 5, 0), std::min(mps0.y, 1080 - 5), 5, 5, Colors::white);
 
-    sc->DrawRectangle(mps1.x, mps1.y, 25, 25, m1_pressed ? Colors::bright_cyan : Colors::cyan);
-    sc->DrawRectangle(mps1.x, mps1.y, 5, 5, Colors::white);
+    sc->DrawRectangle(std::max(std::min(mps1.x, 1920 - 25), 0), std::min(mps1.y, 1080 - 25), 25, 25,
+                      m1_pressed ? Colors::bright_cyan : Colors::cyan);
+    sc->DrawRectangle(std::max(std::min(mps1.x, 1920 - 5), 0), std::min(mps1.y, 1080 - 5), 5, 5,
+                      Colors::white);
 }
 
 void UI::Panel(Rect const& rect, Color fill, Color border) {

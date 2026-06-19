@@ -56,10 +56,10 @@ void Mice::Update() {
         mouse.stable = mouse.delta;
         mouse.delta = {};
         mouse.wheel = mouse.stable.wheel;
-        mouse.position.x += mouse.stable.dx;
-        mouse.position.y += mouse.stable.dy;
-        mouse.position.x += mouse.stable.dx;
-        mouse.position.y += mouse.stable.dy;
+        mouse.position.x += mouse.stable.dx * 2; // arbitrary scaling, todo fix
+        mouse.position.y += mouse.stable.dy * 2;
+        mouse.position.x = std::clamp(mouse.position.x, 0, 1920);
+        mouse.position.y = std::clamp(mouse.position.y, 0, 1080);
         auto old = mouse.current_buttons;
         auto now = mouse.stable.buttons;
         mouse.current_buttons = now;
