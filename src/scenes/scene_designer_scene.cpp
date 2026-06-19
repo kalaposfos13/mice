@@ -21,9 +21,6 @@ void THIS_SCENE::Enter() {
 void THIS_SCENE::Leave() {}
 
 void THIS_SCENE::Update(double dt) {
-    if (ctx.pad.IsPressed(OrbisPadButton::ORBIS_PAD_BUTTON_CIRCLE)) {
-        ctx.scenes.Pop();
-    }
     if ((ctx.mice[0].clicked_buttons.Includes(MouseButton::Middle)) != 0) {
         ctx.mice.SetCursor(0, 1920 / 2, 1080 / 2 + 300);
     }

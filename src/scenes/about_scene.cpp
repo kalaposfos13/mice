@@ -7,11 +7,7 @@ void THIS_SCENE::Enter() {}
 
 void THIS_SCENE::Leave() {}
 
-void THIS_SCENE::Update(double dt) {
-    if (ctx.pad.IsPressed(OrbisPadButton::ORBIS_PAD_BUTTON_CIRCLE)) {
-        ctx.scenes.Pop();
-    }
-}
+void THIS_SCENE::Update(double dt) {}
 
 void THIS_SCENE::Draw() {
 

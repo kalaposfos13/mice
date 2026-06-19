@@ -12,11 +12,6 @@ void PanelViewerScene::Enter() {
 void PanelViewerScene::Leave() {}
 
 void PanelViewerScene::Update(double) {
-    if (ctx.pad.IsPressed(OrbisPadButton::ORBIS_PAD_BUTTON_CIRCLE)) {
-        ctx.scenes.Pop();
-        return;
-    }
-
     wm_.Update();
 }
 

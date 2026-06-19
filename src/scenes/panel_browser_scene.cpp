@@ -30,10 +30,6 @@ void PanelBrowserScene::Enter() {
 void PanelBrowserScene::Leave() {}
 
 void PanelBrowserScene::Update(double dt) {
-    if (ctx.pad.IsPressed(OrbisPadButton::ORBIS_PAD_BUTTON_CIRCLE)) {
-        ctx.scenes.Pop();
-        return;
-    }
     if (ctx.mice[0].wheel > 0) {
         scroll--;
     }

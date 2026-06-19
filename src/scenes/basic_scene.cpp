@@ -16,9 +16,6 @@ void BasicScene::Leave() {
 
 void BasicScene::Update(double dt) {
     elapsed_time += dt;
-    if (ctx.pad.IsPressed(OrbisPadButton::ORBIS_PAD_BUTTON_CIRCLE)) {
-        ctx.scenes.Pop();
-    }
     if (ctx.pad.IsPressed(OrbisPadButton::ORBIS_PAD_BUTTON_TRIANGLE)) {
         ctx.scenes.Push<BasicScene>();
     }

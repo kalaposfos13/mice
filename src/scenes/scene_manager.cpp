@@ -38,6 +38,11 @@ void SceneManager::Update(double dt) {
         scene->Update(dt);
     }
 
+    // hardcoded inputs
+    if (ctx.pad.IsPressed(OrbisPadButton::ORBIS_PAD_BUTTON_CIRCLE)) {
+        ctx.scenes.Pop();
+    }
+
     ApplyCommands();
 }
 
