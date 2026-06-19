@@ -1,5 +1,6 @@
 #include "app.h"
 #include "display/ui/ui.h"
+#include "scenes/game_scene.h"
 
 #include <map>
 #include <utility>
@@ -8,7 +9,7 @@ void App::Run() {
     ctx.mice.Recenter(0);
     ctx.mice.Recenter(1);
 
-    ctx.scenes.Push<SceneDesignerScene>();
+    ctx.scenes.Push<GameScene>(SaveData{});
     ctx.scenes.Update(0.0f);
 
     ctx.state.running = true;
