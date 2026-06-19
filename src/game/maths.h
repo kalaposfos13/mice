@@ -1,3 +1,6 @@
 #pragma once
 
-class Vec2 {};
+class Vec2 {
+public:
+    double x, y;
+};

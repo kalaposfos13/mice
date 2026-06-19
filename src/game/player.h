@@ -1,14 +1,12 @@
 #pragma once
 
+#include <array>
+#include "arm.h"
 #include "container.h"
 #include "maths.h"
 
-class Arm {
-    Vec2 position;
-    bool gripping{};
-};
-
 class Player {
-    Arm arms[2];
+public:
+    std::array<Arm, 2> arms;
     Container* held_container;
 };

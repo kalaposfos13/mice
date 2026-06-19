@@ -6,7 +6,7 @@
 
 class GameManager {
 public:
-    GameManager(SaveData save) {};
+    GameManager(SaveData&& save);
     void Update(double dt);
     void Draw();
 private:

@@ -5,7 +5,7 @@
 
 class GameScene : public Scene {
 public:
-    explicit GameScene(SaveData save);
+    explicit GameScene(SaveData&& save);
     void Enter() override;
     void Leave() override;
     void Update(double dt) override;

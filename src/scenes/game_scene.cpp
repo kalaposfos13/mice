@@ -3,7 +3,7 @@
 
 #define THIS_SCENE GameScene
 
-GameScene::GameScene(SaveData save) : game(save) {}
+GameScene::GameScene(SaveData&& save) : game(std::move(save)) {}
 
 void THIS_SCENE::Enter() {
     ctx.state.draw_mice = false;
