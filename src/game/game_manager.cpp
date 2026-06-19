@@ -15,23 +15,14 @@ GameManager::GameManager(SaveData&& save) {
 
 void GameManager::Update(double dt) {
     for (int i = 0; i < player.arms.size(); i++) {
-        player.arms[i].target = {(double)ctx.mice[i].position.x, (double)ctx.mice[i].position.y};
+        player.arms[i].target = {ctx.mice[i].position.x, ctx.mice[i].position.y};
     }
 }
 
 void GameManager::Draw() {
     UI ui{};
     ui.Button({100, 100, 100, 100}, "");
-    // ctx.renderer.scene->DrawLine(player.arms[0].base.x, player.arms[0].base.y,
-    //                              player.arms[0].target.x - player.arms[0].base.x,
-    //                              player.arms[0].target.y - player.arms[0].base.y, 10,
-    //                              Colors::orange);
 
-    // ctx.renderer.scene->DrawLine(player.arms[1].base.x, player.arms[1].base.y,
-    //                              player.arms[1].target.x - player.arms[1].base.x,
-    //                              player.arms[1].target.y - player.arms[1].base.y, 10, Colors::cyan);
-
-    //
     player.arms[0].Draw(false);
     player.arms[1].Draw(true);
 }
