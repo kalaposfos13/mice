@@ -6,18 +6,11 @@
 #include <utility>
 
 void App::Run() {
-    ctx.mice.Recenter(0);
-    ctx.mice.Recenter(1);
-
-    ctx.scenes.Push<GameScene>(std::move(SaveData{}));
-    ctx.scenes.Update(0.0f);
-
     ctx.state.running = true;
     auto dt_prev = std::chrono::system_clock::now();
 
     while (ctx.state.running) {
-        ctx.pad.Update();
-        ctx.mice.Update();
+        ctx.input.Update();
 
         auto now = std::chrono::system_clock::now();
         double dt = std::chrono::duration<double>(now - dt_prev).count();
@@ -32,6 +25,9 @@ void App::Run() {
 
 App::App() {
     UI::InitFonts();
+
+    ctx.scenes.Push<GameScene>(std::move(SaveData{}));
+    ctx.scenes.Update(0.0f);
 }
 
 App::~App() {

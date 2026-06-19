@@ -8,8 +8,8 @@ static WidgetState checkbox_state{}, slider_state{}, button_state{}, progressbar
 
 void THIS_SCENE::Enter() {
     LOG_INFO("enter");
-    ctx.mice.SetCursor(0, 1920 / 2, 1080 / 2 + 300);
-    ctx.mice.SetCursor(1, 1920 / 2, 1080 / 2 + 300);
+    ctx.input.SetPosition(0, {1920 / 2, 1080 / 2 + 300});
+    ctx.input.SetPosition(1, {1920 / 2, 1080 / 2 + 300});
 
     wm.Load(WORKDIR_ROOT / "panel.txt");
     wm.Bind("btn1", &button_state);
@@ -21,11 +21,11 @@ void THIS_SCENE::Enter() {
 void THIS_SCENE::Leave() {}
 
 void THIS_SCENE::Update(double dt) {
-    if ((ctx.mice[0].clicked_buttons.Includes(MouseButton::Middle)) != 0) {
-        ctx.mice.SetCursor(0, 1920 / 2, 1080 / 2 + 300);
+    if ((ctx.input[0].pressed.Includes(ButtonMask::bTertiary)) != 0) {
+        ctx.input.SetPosition(0, {1920 / 2, 1080 / 2 + 300});
     }
-    if ((ctx.mice[1].clicked_buttons.Includes(MouseButton::Middle)) != 0) {
-        ctx.mice.SetCursor(1, 1920 / 2, 1080 / 2 + 300);
+    if ((ctx.input[1].pressed.Includes(ButtonMask::bTertiary)) != 0) {
+        ctx.input.SetPosition(1, {1920 / 2, 1080 / 2 + 300});
     }
     wm.Update();
     if (button_state.released) {

@@ -3,6 +3,7 @@
 #include <mutex>
 #include <utility>
 #include "common/types.h"
+#include "input_backend.h"
 #include "orbis/UserService.h"
 
 constexpr s32 ORBIS_MOUSE_ERROR_INVALID_ARG = 0x80DF0001;
@@ -55,6 +56,9 @@ struct MouseButtonsState {
     bool Includes(MouseButton btn) const {
         return bits & u32(btn);
     }
+    operator u32 const() const {
+        return bits;
+    }
 };
 
 struct MouseFrameState {
@@ -80,24 +84,31 @@ struct Mouse {
     MouseButtonsState clicked_buttons{};
     MouseButtonsState released_buttons{};
 
-    MousePosition position{};
+    Vec2 position{};
     s32 wheel{};
 
     std::array<OrbisMouseData, 64> data_buf{};
+
+    operator InputState() const;
 };
 
 using MouseArray = std::array<Mouse, 2>;
-class Mice {
+class Mice : public InputBackend {
 public:
     MouseArray mice;
     std::mutex mm{};
-    Mice() {}
+    Mice();
     ~Mice();
-    void Init(OrbisUserServiceUserId const& uid);
-    void Update();
-    void SetCursor(s32 which, s32 x, s32 y);
-    void Recenter(s32 which);
+    void Init();
+    void Start();
+    void Stop();
+    void Flush();
+    void SetPosition(u64 which, Vec2 const pos);
     Mouse& operator[](u64 index) {
         return mice[index];
+    }
+    bool IsAvailable();
+    std::string GetName() {
+        return "Mice";
     }
 };

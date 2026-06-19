@@ -30,10 +30,10 @@ void PanelBrowserScene::Enter() {
 void PanelBrowserScene::Leave() {}
 
 void PanelBrowserScene::Update(double dt) {
-    if (ctx.mice[0].wheel > 0) {
+    if (ctx.input[0].scroll > 0) {
         scroll--;
     }
-    if (ctx.mice[0].wheel < 0) {
+    if (ctx.input[0].scroll < 0) {
         scroll++;
     }
     scroll = std::clamp(scroll, (s64)0, std::max((s64)12, (s64)panels_.size()) - 12);

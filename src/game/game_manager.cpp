@@ -9,13 +9,14 @@ GameManager::GameManager(SaveData&& save) {
     player.arms = dummy_level.starting_pose;
     player.arms[0].color = Colors::orange;
     player.arms[1].color = Colors::cyan;
-    ctx.mice.SetCursor(0, player.arms[0].target.x, player.arms[0].target.y);
-    ctx.mice.SetCursor(1, player.arms[1].target.x, player.arms[1].target.y);
+
+    LOG_CALL(ctx.input.SetPosition(0, player.arms[0].target));
+    ctx.input.SetPosition(1, player.arms[1].target);
 }
 
 void GameManager::Update(double dt) {
     for (int i = 0; i < player.arms.size(); i++) {
-        player.arms[i].target = {ctx.mice[i].position.x, ctx.mice[i].position.y};
+        player.arms[i].target = {ctx.input[i].position.x, ctx.input[i].position.y};
     }
 }
 

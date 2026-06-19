@@ -3,6 +3,7 @@
 #include "common/types.h"
 #include "display/graphics.h"
 #include "input/mouse.h"
+#include "maths.h"
 
 namespace Colors {
 static constexpr Color red{255, 0, 0};
@@ -53,6 +54,9 @@ struct UITheme {
 struct Point {
     s32 x{};
     s32 y{};
+    Point(auto x_, auto y_) : x(x_), y(y_) {}
+    Point() {}
+    Point(Vec2 const v) : x(v.x), y(v.y) {}
 };
 
 struct Rect {
@@ -64,7 +68,7 @@ struct Rect {
     bool Contains(s32 const _x, s32 const _y) const {
         return _x > x && _x < x + w && _y > y && _y < y + h;
     }
-    bool Contains(MousePosition const p) const {
+    bool Contains(Vec2 const p) const {
         return Contains(p.x, p.y);
     }
 };

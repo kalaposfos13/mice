@@ -10,8 +10,8 @@ static double steady_dt = 0;
 void THIS_SCENE::Enter() {
     LOG_INFO("enter");
     steady_time = std::chrono::steady_clock::now();
-    ctx.mice.SetCursor(0, 1920 / 2, 1080 / 2 + 300);
-    ctx.mice.SetCursor(1, 1920 / 2, 1080 / 2 + 300);
+    ctx.input.SetPosition(0, {1920 / 2, 1080 / 2 + 300});
+    ctx.input.SetPosition(1, {1920 / 2, 1080 / 2 + 300});
 }
 
 void THIS_SCENE::Leave() {}
@@ -22,11 +22,11 @@ void THIS_SCENE::Update(double dt) {
     steady_dt = std::chrono::duration<double>(steady_now - steady_time).count();
     steady_time = steady_now;
 
-    if ((ctx.mice[0].clicked_buttons.Includes(MouseButton::Middle)) != 0) {
-        ctx.mice.SetCursor(0, 1920 / 2, 1080 / 2 + 300);
+    if ((ctx.input[1].pressed.Includes(ButtonMask::bTertiary)) != 0) {
+        ctx.input.SetPosition(0, {1920 / 2, 1080 / 2 + 300});
     }
-    if ((ctx.mice[1].clicked_buttons.Includes(MouseButton::Middle)) != 0) {
-        ctx.mice.SetCursor(1, 1920 / 2, 1080 / 2 + 300);
+    if ((ctx.input[1].pressed.Includes(ButtonMask::bTertiary)) != 0) {
+        ctx.input.SetPosition(1, {1920 / 2, 1080 / 2 + 300});
     }
 }
 

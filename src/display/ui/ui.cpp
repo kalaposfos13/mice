@@ -46,26 +46,26 @@ UITheme UI::default_theme = {
 WidgetState UI::Evaluate(Rect const& rect) {
     WidgetState s{};
 
-    s.hovered_m0 = rect.Contains(ctx.mice[0].position);
-    s.hovered_m1 = rect.Contains(ctx.mice[1].position);
+    s.hovered_m0 = rect.Contains(ctx.input[0].position);
+    s.hovered_m1 = rect.Contains(ctx.input[1].position);
 
     bool accept = ctx.state.accepting_inputs;
 
-    s.held_m0 = accept && s.hovered_m0 && ctx.mice[0].current_buttons.Includes(MouseButton::Right);
+    s.held_m0 = accept && s.hovered_m0 && ctx.input[0].held.Includes(ButtonMask::bPrimary);
 
-    s.held_m1 = accept && s.hovered_m1 && ctx.mice[1].current_buttons.Includes(MouseButton::Left);
+    s.held_m1 = accept && s.hovered_m1 && ctx.input[1].held.Includes(ButtonMask::bPrimary);
 
     s.clicked_m0 =
-        accept && s.hovered_m0 && ctx.mice[0].clicked_buttons.Includes(MouseButton::Right);
+        accept && s.hovered_m0 && ctx.input[0].pressed.Includes(ButtonMask::bPrimary);
 
     s.clicked_m1 =
-        accept && s.hovered_m1 && ctx.mice[1].clicked_buttons.Includes(MouseButton::Left);
+        accept && s.hovered_m1 && ctx.input[1].pressed.Includes(ButtonMask::bPrimary);
 
     s.released_m0 =
-        accept && s.hovered_m0 && ctx.mice[0].released_buttons.Includes(MouseButton::Right);
+        accept && s.hovered_m0 && ctx.input[0].released.Includes(ButtonMask::bPrimary);
 
     s.released_m1 =
-        accept && s.hovered_m1 && ctx.mice[1].released_buttons.Includes(MouseButton::Left);
+        accept && s.hovered_m1 && ctx.input[1].released.Includes(ButtonMask::bPrimary);
 
     s.hovered = s.hovered_m0 || s.hovered_m1;
 
@@ -117,10 +117,10 @@ void UI::Label(Point pos, std::string_view const text, FontSize const size) {
 }
 
 void UI::DrawCursors() {
-    MousePosition const& mps0 = ctx.mice[0].position;
-    MousePosition const& mps1 = ctx.mice[1].position;
-    bool m0_pressed = ctx.mice[0].current_buttons.Includes(MouseButton::Right);
-    bool m1_pressed = ctx.mice[1].current_buttons.Includes(MouseButton::Left);
+    Point const& mps0 = ctx.input[0].position;
+    Point const& mps1 = ctx.input[1].position;
+    bool m0_pressed = ctx.input[0].held.Includes(ButtonMask::bPrimary);
+    bool m1_pressed = ctx.input[1].held.Includes(ButtonMask::bPrimary);
 
     auto sc = ctx.renderer.scene;
     sc->DrawRectangle(std::max(mps0.x - 25, 0), std::min(mps0.y, 1080 - 25), 25, 25,
@@ -195,9 +195,9 @@ WidgetState UI::Slider(Rect const& rect, float value, float min, float max, floa
         int x;
 
         if (state.held_m0)
-            x = ctx.mice[0].position.x;
+            x = ctx.input[0].position.x;
         else
-            x = ctx.mice[1].position.x;
+            x = ctx.input[1].position.x;
 
         float t = float(x - track.x) / float(track.w);
 

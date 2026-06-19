@@ -3,8 +3,7 @@
 #include "common/assert.h"
 #include "common/logging.h"
 #include "display/renderer.h"
-#include "input/mouse.h"
-#include "input/pad.h"
+#include "input/input_manager.h"
 #include "scenes/scene_manager.h"
 
 #include <filesystem>
@@ -27,8 +26,7 @@ public:
     Renderer renderer{};
 
     s32 user_id{};
-    Pad pad{};
-    Mice mice{};
+    InputManager input{};
 
     AppSettings settings{};
     AppState state;
