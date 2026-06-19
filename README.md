@@ -10,7 +10,7 @@ Non-Linux: Follow the Linux building tutorial, and it will either work or not. Â
 Linux:
 - Get some build tools, you'll figure it out hopefully. The default compiler is clang, but in theory other compilers can work too.
 - Get the toolchain-llvm-18 (older llvm versions probably work too) artifact from the latest release/action from https://github.com/ps4emulation/OpenOrbis-PS4-Toolchain/
-- Unzip it, and set the OO_PS4_TOOLCHAIN environment variable to the project root
+- Unzip it, untar the unzipped tarball, and set the OO_PS4_TOOLCHAIN environment variable to the OpenOrbis/PS4Toolchain folder in that
 - `cmake -S . -B build -G "Ninja" -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_TOOLCHAIN_FILE=OpenOrbis-tc.cmake`
 - `cmake --build build --parallel $(nproc)`
 - If you need a PKG:
